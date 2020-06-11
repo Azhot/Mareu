@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Ma réu</string>
+    <string name="meeting_cell_layout_delete_button">Delete button</string>
+    <string name="add_meeting_layout_subject_hint"><i>Meeting subject …</i></string>
+    <string name="add_meeting_layout_participants_hint"><i>Participant 1, participant 2, …</i></string>
+    <string name="add_meeting_layout_notes_hint"><i>Notes …</i></string>
+    <string name="add_meeting_activity_discard_meeting">Discard meeting ?</string>
+    <string name="add_meeting_activity_discard_meeting_yes">Yes</string>
+    <string name="add_meeting_activity_discard_meeting_no">No</string>
+    <string name="filter">Filter</string>
+    <string name="menu_filter_by_date">Filter by date</string>
+    <string name="menu_filter_by_meeting_room">Filter by meeting room</string>
+    <string name="menu_show_all_meetings">Show all meetings</string>
+    <string name="hint_meeting_rooms">Select meeting room …</string>
+    <string name="mario_meeting_room">Mario</string>
+    <string name="luigi_meeting_room">Luigi</string>
+    <string name="peach_meeting_room">Peach</string>
+    <string name="toad_meeting_room">Toad</string>
+    <string name="yoshi_meeting_room">Yoshi</string>
+    <string name="daisy_meeting_room">Daisy</string>
+    <string name="bowser_meeting_room">Bowser</string>
+    <string name="harmonie_meeting_room">Harmonie</string>
+    <string name="waluigi_meeting_room">Waluigi</string>
+    <string name="wario_meeting_room">Wario</string>
+    <string name="hint_meeting_priority">Select meeting priority …</string>
+    <string name="low_priority">Low</string>
+    <string name="average_priority">Average</string>
+    <string name="high_priority">High</string>
+    <string name="save">Save</string>
+    <string name="time_slot_taken_title">Change start time or try with another meeting room</string>
+    <string name="time_slot_taken_message">This time slot overlaps that of another meeting (%1$s to %2$s)</string>
+    <string name="ok">OK</string>
+
+</resources>

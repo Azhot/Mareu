@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/filter_menu">
+    <item
+        android:id="@+id/no_filter"
+        android:title="@string/menu_show_all_meetings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/date_filter"
+        android:title="@string/menu_filter_by_date"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/room_filter"
+        android:title="@string/menu_filter_by_meeting_room"
+        app:showAsAction="never">
+
+        <menu>
+
+        </menu>
+
+    </item>
+</menu>

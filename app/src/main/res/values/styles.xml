@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
+
+    <!-- Filter icon looks -->
+    <style name="FilterMenuIcon" parent="android:Widget.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_filter_icon_24</item>
+        <item name="android:background">?android:attr/actionBarItemBackground</item>
+    </style>
+
+    <!-- Launcher activity theme -->
+    <style name="AppTheme.LauncherTheme" parent="AppTheme">
+        <item name="android:actionOverflowButtonStyle">@style/FilterMenuIcon</item>
+    </style>
+
+    <!-- Removes action bar -->
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Hint item style -->
+    <style name="hintItemStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextHint</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <!-- Spinner item style -->
+    <style name="spinnerItemStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- Dropdown spinner style -->
+    <style name="spinnerDropDownItemStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+</resources>
