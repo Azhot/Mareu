@@ -4,7 +4,7 @@
     android:id="@+id/filter_menu">
     <item
         android:id="@+id/no_filter"
-        android:title="@string/menu_show_all_meetings"
+        android:title="@string/menu_no_filter"
         app:showAsAction="never" />
 
     <item

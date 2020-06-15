@@ -41,37 +41,35 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
     private List<Meeting> mMeetings;
     private MeetingRecyclerViewAdapter mMeetingRecyclerViewAdapter;
     private ActionBar mActionBar;
+    private Calendar mCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        initUI(); // init UI components
+        initData();
+        initUI();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.filter_menu, menu); // inflate the menu
-
-        // create room sub-menu items programmatically
+        getMenuInflater().inflate(R.menu.filter_menu, menu);
+        // create room sub-menu items programmatically (so it automatically updates if we update meeting rooms)
         SubMenu roomSubMenu = menu.findItem(R.id.room_filter).getSubMenu();
         for (int i = 0; i < MeetingRoom.getMeetingRoomsStringResources().size(); i++) {
             roomSubMenu.add(R.id.room_filter, MeetingRoom.getMeetingRoomsStringResources().get(i), Menu.NONE, MeetingRoom.getMeetingRoomsStringResources().get(i));
         }
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.no_filter:
                 setAdapterMeetingList(mMeetingRepository.getMeetings());
                 setActionBarSubtitle(null);
                 break;
             case R.id.date_filter:
-                DialogFragment datePicker = new DatePickerFragment();
+                DialogFragment datePicker = new DatePickerFragment(mCalendar);
                 datePicker.show(getSupportFragmentManager(), "filter_datePicker");
                 break;
             default:
@@ -86,25 +84,19 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, dayOfMonth);
-
-        setAdapterMeetingList(mMeetingRepository.getMeetingsFilteredByDate(calendar));
-
+        mCalendar.set(year, month, dayOfMonth);
+        setAdapterMeetingList(mMeetingRepository.getMeetingsFilteredByDate(mCalendar));
         SimpleDateFormat date = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
-        setActionBarSubtitle(getString(R.string.filter) + ": " + date.format(calendar.getTime()));
+        setActionBarSubtitle(getString(R.string.filter) + ": " + date.format(mCalendar.getTime()));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        // retrieve new meeting via Gson
         if (requestCode == LAUNCH_ADD_MEETING_ACTIVITY && resultCode == Activity.RESULT_OK && data != null) {
-
             String newMeetingGson = data.getStringExtra(AddMeetingActivity.NEW_MEETING_EXTRA);
             Meeting newMeeting = new Gson().fromJson(newMeetingGson, Meeting.class);
-
             mMeetingRepository.createMeeting(newMeeting);
             if (mMeetings != mMeetingRepository.getMeetings()) {
                 mMeetings.add(newMeeting); // to cope with updating list if a filter is on
@@ -113,27 +105,23 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
         }
     }
 
-    // TODO
     private void initData() {
-
-    }
-
-    private void initUI() {
         mMeetingRepository = DI.getMeetingRepository();
         mMeetings = mMeetingRepository.getMeetings();
         mActionBar = getSupportActionBar();
+        mCalendar = Calendar.getInstance();
+    }
 
+    private void initUI() {
         // bind widgets with view binding
         mBinding = ActivityListMeetingBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
-
         // set-up the RecyclerView
         mBinding.listMeetingActivityRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMeetingRecyclerViewAdapter = new MeetingRecyclerViewAdapter(this, mMeetings);
         mBinding.listMeetingActivityRecyclerView.setAdapter(mMeetingRecyclerViewAdapter);
-
-        // set-up the FAB to add new meeting
+        // set-up the FAB to add new meetings
         mBinding.listMeetingActivityFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,24 +130,27 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
         });
     }
 
+    // used to apply a subtitle to the action bar when selecting a filter
     private void setActionBarSubtitle(String string) {
         if (mActionBar != null) {
             mActionBar.setSubtitle(string);
         }
     }
 
+    // used for filtering meetings
     private void setAdapterMeetingList(List<Meeting> meetings) {
         mMeetings = meetings;
         mMeetingRecyclerViewAdapter.setMeetingList(mMeetings);
     }
 
     // for tests
-    public void setMeetingRepository(MeetingRepository meetingRepository) {
-        this.mMeetingRepository = meetingRepository;
-    }
-
-    // for tests
     public MeetingRepository getMeetingRepository() {
         return this.mMeetingRepository;
+    }
+
+    // todo : implement base activity
+    // for tests
+    public void setMeetingRepository(MeetingRepository meetingRepository) {
+        this.mMeetingRepository = meetingRepository;
     }
 }

@@ -28,11 +28,11 @@
         android:layout_width="wrap_content"
         android:layout_height="32dp"
         android:layout_marginEnd="16dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         android:background="@drawable/bg_add_meeting_save_button"
         android:clickable="true"
         android:focusable="true"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:src="@drawable/ic_add_cross_24"
         android:state_enabled="true"
         android:text="@string/save"
@@ -45,10 +45,10 @@
         android:id="@+id/add_meeting_activity_subject_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:background="@drawable/bg_with_bottom_separator"
         android:ems="1"
-        android:hint="@string/add_meeting_layout_subject_hint"
+        android:hint="@string/subject_edit_text_hint"
         android:inputType="textShortMessage"
         android:paddingStart="8dp"
         android:paddingTop="16dp"
@@ -67,8 +67,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_with_bottom_separator"
         android:ems="1"
-        android:hint="@string/add_meeting_layout_participants_hint"
-        android:inputType="textShortMessage"
+        android:hint="@string/participants_edit_text_hint"
+        android:inputType="textEmailAddress"
         android:paddingStart="8dp"
         android:paddingTop="24dp"
         android:paddingEnd="8dp"
@@ -79,21 +79,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_subject_editText" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_meeting_activity_datePicker_start_button"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/add_meeting_activity_start_datePicker_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/white"
-        android:padding="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
-        android:textSize="14sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@id/add_meeting_start_arrow"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_participants_editText" />
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_participants_editText"
+        android:text="Lun. 2 mai 2020"
+        />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/add_meeting_start_arrow"
@@ -101,44 +103,45 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/ic_arrow_right_24"
-        app:layout_constraintBottom_toBottomOf="@id/add_meeting_activity_datePicker_start_button"
-        app:layout_constraintEnd_toStartOf="@id/add_meeting_activity_timePicker_start_button"
-        app:layout_constraintStart_toEndOf="@id/add_meeting_activity_datePicker_start_button"
-        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_datePicker_start_button" />
+        app:layout_constraintBottom_toBottomOf="@id/add_meeting_activity_start_datePicker_textView"
+        app:layout_constraintEnd_toStartOf="@id/add_meeting_activity_start_timePicker_textView"
+        app:layout_constraintStart_toEndOf="@id/add_meeting_activity_start_datePicker_textView"
+        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_start_datePicker_textView" />
 
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_meeting_activity_timePicker_start_button"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/add_meeting_activity_start_timePicker_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/white"
-        android:padding="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
-        android:textSize="14sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/add_meeting_start_arrow"
-        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_datePicker_start_button" />
+        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_start_datePicker_textView"
+        android:text="16:00"
+        />
 
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_meeting_activity_datePicker_end_button"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/add_meeting_activity_end_datePicker_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:clickable="false"
-        android:focusable="false"
-        android:backgroundTint="@android:color/white"
-        android:padding="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
         android:textAllCaps="false"
-        android:textColor="@color/colorTextHint"
-        android:textStyle="italic"
-        android:textSize="14sp"
+        android:textColor="@color/colorText"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@id/add_meeting_end_arrow"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_datePicker_start_button" />
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_start_datePicker_textView"
+        android:text="Lun. 2 mai 2020"
+        />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/add_meeting_end_arrow"
@@ -146,28 +149,26 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/ic_arrow_right_24"
-        app:layout_constraintBottom_toBottomOf="@id/add_meeting_activity_datePicker_end_button"
-        app:layout_constraintEnd_toStartOf="@id/add_meeting_activity_timePicker_end_button"
-        app:layout_constraintStart_toEndOf="@id/add_meeting_activity_datePicker_end_button"
-        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_datePicker_end_button" />
+        app:layout_constraintBottom_toBottomOf="@id/add_meeting_activity_end_datePicker_textView"
+        app:layout_constraintEnd_toStartOf="@id/add_meeting_activity_end_timePicker_textView"
+        app:layout_constraintStart_toEndOf="@id/add_meeting_activity_end_datePicker_textView"
+        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_end_datePicker_textView" />
 
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_meeting_activity_timePicker_end_button"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/add_meeting_activity_end_timePicker_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/white"
-        android:padding="16dp"
-        android:clickable="false"
-        android:focusable="false"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
         android:textAllCaps="false"
-        android:textColor="@color/colorTextHint"
-        android:textStyle="italic"
-        android:textSize="14sp"
+        android:textColor="@color/colorText"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/add_meeting_end_arrow"
-        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_datePicker_end_button" />
-
+        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_end_datePicker_textView"
+        android:text="16:00"
+        />
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/add_meeting_activity_room_spinner"
@@ -182,7 +183,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_datePicker_end_button" />
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_end_timePicker_textView" />
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/add_meeting_activity_priority_spinner"
@@ -212,7 +213,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:gravity="top"
-            android:hint="@string/add_meeting_layout_notes_hint"
+            android:hint="@string/notes_edit_text_hint"
             android:inputType="textMultiLine"
             android:minLines="8"
             android:paddingStart="8dp"

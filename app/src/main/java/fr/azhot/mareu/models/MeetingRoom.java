@@ -9,16 +9,16 @@ import fr.azhot.mareu.R;
  * Enum representing meeting rooms for {@link Meeting} objects
  */
 public enum MeetingRoom {
-    MARIO(R.string.mario_meeting_room),
-    LUIGI(R.string.luigi_meeting_room),
-    PEACH(R.string.peach_meeting_room),
-    TOAD(R.string.toad_meeting_room),
-    YOSHI(R.string.yoshi_meeting_room),
-    DAISY(R.string.daisy_meeting_room),
-    BOWSER(R.string.bowser_meeting_room),
-    HARMONIE(R.string.harmonie_meeting_room),
-    WALUIGI(R.string.waluigi_meeting_room),
-    WARIO(R.string.wario_meeting_room);
+    MARIO(R.string.mario),
+    LUIGI(R.string.luigi),
+    PEACH(R.string.peach),
+    TOAD(R.string.toad),
+    YOSHI(R.string.yoshi),
+    DAISY(R.string.daisy),
+    BOWSER(R.string.bowser),
+    HARMONIE(R.string.harmonie),
+    WALUIGI(R.string.waluigi),
+    WARIO(R.string.wario);
 
     private final int mStringResource;
 

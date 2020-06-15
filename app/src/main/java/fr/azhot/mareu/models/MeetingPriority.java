@@ -1,14 +1,17 @@
 package fr.azhot.mareu.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.azhot.mareu.R;
 
 /**
  * Enum representing priorities for {@link Meeting} objects
  */
 public enum MeetingPriority {
-    LOW(R.string.low_priority),
-    AVERAGE(R.string.average_priority),
-    HIGH(R.string.high_priority);
+    LOW(R.string.low),
+    AVERAGE(R.string.average),
+    HIGH(R.string.high);
 
     private final int mStringResource;
 
@@ -21,12 +24,12 @@ public enum MeetingPriority {
     }
 
     /**
-     * @return an int array of {@link MeetingPriority} members' mStringResource
+     * @return a list of {@link MeetingPriority} members' mStringResource
      */
-    public static int[] getMeetingPrioritiesStringResources() {
-        int[] meetingPrioritiesStringResources = new int[MeetingPriority.values().length];
-        for (int i = 0; i < meetingPrioritiesStringResources.length; i++) {
-            meetingPrioritiesStringResources[i] = MeetingPriority.values()[i].mStringResource;
+    public static List<Integer> getMeetingPrioritiesStringResources() {
+        List<Integer> meetingPrioritiesStringResources = new ArrayList<>();
+        for (MeetingPriority meetingPriority : MeetingPriority.values()) {
+            meetingPrioritiesStringResources.add(meetingPriority.mStringResource);
         }
         return meetingPrioritiesStringResources;
     }

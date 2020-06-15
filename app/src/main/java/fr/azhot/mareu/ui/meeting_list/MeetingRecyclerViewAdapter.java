@@ -85,8 +85,6 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             meetingDetails.append(meeting.getSubject());
             meetingDetails.append(" - ");
             meetingDetails.append(time.format(meeting.getStartTime().getTime()));
-            meetingDetails.append(" : ");
-            meetingDetails.append(time.format(meeting.getEndTime().getTime()));
             meetingDetails.append(" - ");
             meetingDetails.append(mContext.getString(meeting.getMeetingRoom().getStringResource()));
             mBinding.meetingCellMeetingText.setText(meetingDetails);
