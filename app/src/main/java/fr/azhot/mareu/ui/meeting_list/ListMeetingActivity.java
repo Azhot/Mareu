@@ -13,7 +13,6 @@ import android.widget.DatePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -25,15 +24,15 @@ import java.util.List;
 import java.util.Locale;
 
 import fr.azhot.mareu.R;
+import fr.azhot.mareu.base.BaseActivity;
 import fr.azhot.mareu.databinding.ActivityListMeetingBinding;
-import fr.azhot.mareu.di.DI;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.models.MeetingRoom;
 import fr.azhot.mareu.repository.MeetingRepository;
 import fr.azhot.mareu.ui.meeting_add.AddMeetingActivity;
 import fr.azhot.mareu.ui.meeting_add.DatePickerFragment;
 
-public class ListMeetingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class ListMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
 
     private static final int LAUNCH_ADD_MEETING_ACTIVITY = 1;
     private ActivityListMeetingBinding mBinding;
@@ -106,7 +105,7 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
     }
 
     private void initData() {
-        mMeetingRepository = DI.getMeetingRepository();
+        mMeetingRepository = getMeetingRepository();
         mMeetings = mMeetingRepository.getMeetings();
         mActionBar = getSupportActionBar();
         mCalendar = Calendar.getInstance();
@@ -132,9 +131,7 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
 
     // used to apply a subtitle to the action bar when selecting a filter
     private void setActionBarSubtitle(String string) {
-        if (mActionBar != null) {
-            mActionBar.setSubtitle(string);
-        }
+        if (mActionBar != null) mActionBar.setSubtitle(string);
     }
 
     // used for filtering meetings
@@ -143,14 +140,6 @@ public class ListMeetingActivity extends AppCompatActivity implements DatePicker
         mMeetingRecyclerViewAdapter.setMeetingList(mMeetings);
     }
 
-    // for tests
-    public MeetingRepository getMeetingRepository() {
-        return this.mMeetingRepository;
-    }
-
-    // todo : implement base activity
-    // for tests
-    public void setMeetingRepository(MeetingRepository meetingRepository) {
-        this.mMeetingRepository = meetingRepository;
-    }
+    // todo : check tests
+    // todo : tests should create new meetings using the end time
 }

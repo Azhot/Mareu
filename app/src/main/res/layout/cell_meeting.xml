@@ -11,7 +11,7 @@
     android:paddingBottom="16dp">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/meeting_cell_priority_image"
+        android:id="@+id/meeting_cell_priority_imageView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,22 +21,22 @@
         app:srcCompat="@drawable/ic_low_priority_50" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/meeting_cell_meeting_text"
+        android:id="@+id/meeting_cell_meeting_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:textColor="@color/colorText"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/meeting_cell_participants_text"
+        app:layout_constraintBottom_toTopOf="@id/meeting_cell_participants_textView"
         app:layout_constraintEnd_toStartOf="@id/meeting_cell_delete_button"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/meeting_cell_priority_image"
+        app:layout_constraintStart_toEndOf="@id/meeting_cell_priority_imageView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/meeting_cell_participants_text"
+        android:id="@+id/meeting_cell_participants_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -47,8 +47,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/meeting_cell_delete_button"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toEndOf="@id/meeting_cell_priority_image"
-        app:layout_constraintTop_toBottomOf="@id/meeting_cell_meeting_text" />
+        app:layout_constraintStart_toEndOf="@id/meeting_cell_priority_imageView"
+        app:layout_constraintTop_toBottomOf="@id/meeting_cell_meeting_textView" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/meeting_cell_delete_button"

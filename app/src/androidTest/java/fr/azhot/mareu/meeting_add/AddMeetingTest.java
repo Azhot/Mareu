@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import fr.azhot.mareu.R;
-import fr.azhot.mareu.di.DI;
 import fr.azhot.mareu.ui.meeting_list.ListMeetingActivity;
 import fr.azhot.mareu.utils.CreateMeetingActions;
 import fr.azhot.mareu.utils.RecyclerViewItemCountAssertion;
@@ -30,17 +29,17 @@ import static org.hamcrest.core.IsNull.notNullValue;
 @RunWith(AndroidJUnit4.class)
 public class AddMeetingTest {
 
-    private static int ITEMS_COUNT = DI.getNewMeetingRepository().getMeetings().size();
 
     @Rule
     public ActivityTestRule<ListMeetingActivity> mActivityRule = new ActivityTestRule(ListMeetingActivity.class);
     private ListMeetingActivity mActivity;
+    private int mItemsCount;
 
     @Before
     public void setUp() {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
-        mActivity.setMeetingRepository(DI.getNewMeetingRepository());
+        mItemsCount = mActivity.getMeetingRepository().getMeetings().size();
 
         // reset recyclerview list to cope with other tests
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
@@ -58,11 +57,11 @@ public class AddMeetingTest {
 
         // then check that child count is incremented
         onView(withId(R.id.list_meeting_activity_recyclerView))
-                .check(new RecyclerViewItemCountAssertion(ITEMS_COUNT + 1));
+                .check(new RecyclerViewItemCountAssertion(mItemsCount + 1));
     }
 
     @After
     public void tearDown() {
-        mActivityRule.finishActivity();
+        mActivity.resetMeetingRepository();
     }
 }

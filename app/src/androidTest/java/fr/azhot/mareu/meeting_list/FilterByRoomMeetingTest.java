@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import fr.azhot.mareu.R;
-import fr.azhot.mareu.di.DI;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.models.MeetingRoom;
 import fr.azhot.mareu.ui.meeting_list.ListMeetingActivity;
@@ -40,7 +39,6 @@ public class FilterByRoomMeetingTest {
     public void setUp() {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
-        mActivity.setMeetingRepository(DI.getNewMeetingRepository());
     }
 
     /**
@@ -76,6 +74,6 @@ public class FilterByRoomMeetingTest {
 
     @After
     public void tearDown() {
-        mActivityRule.finishActivity();
+        mActivity.resetMeetingRepository();
     }
 }

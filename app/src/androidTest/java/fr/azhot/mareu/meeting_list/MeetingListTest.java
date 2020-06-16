@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import fr.azhot.mareu.R;
-import fr.azhot.mareu.di.DI;
 import fr.azhot.mareu.ui.meeting_list.ListMeetingActivity;
 import fr.azhot.mareu.utils.RecyclerViewItemCountAssertion;
 
@@ -34,7 +33,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 @RunWith(AndroidJUnit4.class)
 public class MeetingListTest {
 
-    private static final int ITEMS_COUNT = DI.getNewMeetingRepository().getMeetings().size();
+    private int mItemsCount;
 
     @Rule
     public ActivityTestRule<ListMeetingActivity> mActivityRule = new ActivityTestRule(ListMeetingActivity.class);
@@ -44,7 +43,7 @@ public class MeetingListTest {
     public void setUp() {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
-        mActivity.setMeetingRepository(DI.getNewMeetingRepository());
+        mItemsCount = mActivity.getMeetingRepository().getMeetings().size();
 
         // reset recyclerview list to cope with other tests
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
@@ -68,18 +67,18 @@ public class MeetingListTest {
     public void myMeetingsList_deleteAction_shouldRemoveItem() {
         // first check recyclerview child count
         onView(withId(R.id.list_meeting_activity_recyclerView))
-                .check(new RecyclerViewItemCountAssertion(ITEMS_COUNT));
+                .check(new RecyclerViewItemCountAssertion(mItemsCount));
         // then perform a click on delete icon of first item
         onView(withId(R.id.list_meeting_activity_recyclerView))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, clickChildViewWithId(R.id.meeting_cell_delete_button)));
         // finally check that child count is decremented
         onView(withId(R.id.list_meeting_activity_recyclerView))
-                .check(new RecyclerViewItemCountAssertion(ITEMS_COUNT - 1));
+                .check(new RecyclerViewItemCountAssertion(mItemsCount - 1));
     }
 
     @After
     public void tearDown() {
-        mActivityRule.finishActivity();
+        mActivity.resetMeetingRepository();
     }
 }
 

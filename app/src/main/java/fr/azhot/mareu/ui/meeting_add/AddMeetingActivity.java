@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.DialogFragment;
 
@@ -30,8 +29,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import fr.azhot.mareu.R;
+import fr.azhot.mareu.base.BaseActivity;
 import fr.azhot.mareu.databinding.ActivityAddMeetingBinding;
-import fr.azhot.mareu.di.DI;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.models.MeetingPriority;
 import fr.azhot.mareu.models.MeetingRoom;
@@ -41,7 +40,7 @@ import static fr.azhot.mareu.utils.TimeUtils.getDateToString;
 import static fr.azhot.mareu.utils.TimeUtils.getTimeToString;
 import static fr.azhot.mareu.utils.TimeUtils.setTimeOfDay;
 
-public class AddMeetingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class AddMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     public static final String NEW_MEETING_EXTRA = "new_meeting";
     private static ActivityAddMeetingBinding mBinding;
@@ -277,7 +276,8 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
         Meeting newMeeting = new Meeting(mStartTimeCalendar, subject, participants, meetingRoom, meetingPriority);
         newMeeting.setNotes(mBinding.addMeetingActivityNotesEditText.getText().toString());
         // check if new meeting time slot does not interfere with another meeting
-        for (Meeting meeting : DI.getMeetingRepository().getMeetings()) {
+        for (Meeting meeting : getMeetingRepository().getMeetings()) {
+            // TODO : correct - it overlaps when selecting date
             if (newMeeting.getMeetingRoom() == meeting.getMeetingRoom()
                     && newMeeting.getStartTime().getTimeInMillis() < meeting.getEndTime().getTimeInMillis()
                     && newMeeting.getEndTime().getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {

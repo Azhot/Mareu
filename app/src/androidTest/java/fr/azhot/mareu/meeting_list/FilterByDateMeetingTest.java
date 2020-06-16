@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 import java.util.Calendar;
 
 import fr.azhot.mareu.R;
-import fr.azhot.mareu.di.DI;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.ui.meeting_list.ListMeetingActivity;
 import fr.azhot.mareu.utils.CreateMeetingActions;
@@ -46,7 +45,6 @@ public class FilterByDateMeetingTest {
     public void setUp() {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
-        mActivity.setMeetingRepository(DI.getNewMeetingRepository());
     }
 
     /**
@@ -85,6 +83,6 @@ public class FilterByDateMeetingTest {
 
     @After
     public void tearDown() {
-        mActivityRule.finishActivity();
+        mActivity.resetMeetingRepository();
     }
 }

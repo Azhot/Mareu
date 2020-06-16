@@ -8,21 +8,10 @@ import fr.azhot.mareu.service.DummyMeetingApiService;
  */
 public class DI {
 
-    private static MeetingRepository mMeetingRepository = new MeetingRepository(new DummyMeetingApiService());
-
     /**
      * @return a {@link MeetingRepository}
      */
-    public static MeetingRepository getMeetingRepository() {
-        return mMeetingRepository;
-    }
-
-    /**
-     * Creates a new {@link MeetingRepository}, for tests
-     *
-     * @return a {@link MeetingRepository} instance
-     */
-    public static MeetingRepository getNewMeetingRepository() {
+    public static MeetingRepository createMeetingRepository() {
         return new MeetingRepository(new DummyMeetingApiService());
     }
 }
