@@ -93,9 +93,7 @@
         app:layout_constraintEnd_toStartOf="@id/add_meeting_start_arrow"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_participants_editText"
-        android:text="Lun. 2 mai 2020"
-        />
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_participants_editText" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/add_meeting_start_arrow"
@@ -120,9 +118,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/add_meeting_start_arrow"
-        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_start_datePicker_textView"
-        android:text="16:00"
-        />
+        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_start_datePicker_textView" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/add_meeting_activity_end_datePicker_textView"
@@ -139,9 +135,7 @@
         app:layout_constraintEnd_toStartOf="@id/add_meeting_end_arrow"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_start_datePicker_textView"
-        android:text="Lun. 2 mai 2020"
-        />
+        app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_start_datePicker_textView" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/add_meeting_end_arrow"
@@ -166,9 +160,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/add_meeting_end_arrow"
-        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_end_datePicker_textView"
-        android:text="16:00"
-        />
+        app:layout_constraintTop_toTopOf="@id/add_meeting_activity_end_datePicker_textView" />
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/add_meeting_activity_room_spinner"

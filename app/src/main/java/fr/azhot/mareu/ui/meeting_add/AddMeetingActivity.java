@@ -111,6 +111,10 @@ public class AddMeetingActivity extends AppCompatActivity implements DatePickerD
     }
     private void initCalendars() {
         mStartTimeCalendar = Calendar.getInstance();
+        mStartTimeCalendar.add(Calendar.HOUR, 1);
+        mStartTimeCalendar.set(Calendar.MINUTE, 0);
+        mStartTimeCalendar.set(Calendar.SECOND, 0);
+        mStartTimeCalendar.set(Calendar.MILLISECOND, 0);
         mEndTimeCalendar = (Calendar) mStartTimeCalendar.clone();
         mEndTimeCalendar.add(Calendar.MINUTE, 45);
     }
