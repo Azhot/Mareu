@@ -273,8 +273,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
         MeetingRoom meetingRoom = MeetingRoom.getMeetingRoomByPosition(mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
         MeetingPriority meetingPriority = MeetingPriority.getMeetingPriorityByPosition(mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
-        Meeting newMeeting = new Meeting(mStartTimeCalendar, subject, participants, meetingRoom, meetingPriority);
-        newMeeting.setNotes(mBinding.addMeetingActivityNotesEditText.getText().toString());
+        String notes = mBinding.addMeetingActivityNotesEditText.getText().toString();
+        Meeting newMeeting = new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes);
         // check if new meeting time slot does not interfere with another meeting
         for (Meeting meeting : getMeetingRepository().getMeetings()) {
             // TODO : correct - it overlaps when selecting date

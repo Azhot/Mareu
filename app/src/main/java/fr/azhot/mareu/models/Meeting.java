@@ -30,7 +30,7 @@ public class Meeting {
         this.mId = UUID.randomUUID().toString();
         this.mStartTime = startTime;
         this.mEndTime = (Calendar) startTime.clone();
-        this.mEndTime.add(Calendar.HOUR, 1);
+        this.mEndTime.add(Calendar.MINUTE, 45);
         this.mSubject = subject;
         this.mParticipants = participants;
         this.mMeetingRoom = meetingRoom;
