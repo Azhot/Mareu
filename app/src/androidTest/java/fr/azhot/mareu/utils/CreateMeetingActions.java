@@ -21,41 +21,41 @@ import static org.hamcrest.Matchers.is;
 
 public class CreateMeetingActions {
 
-    public static void createMeeting(String subject, String participants, int year, int month, int dayOfMonth, int hour, int minute, int positionRoomSpinner, int positionPrioritySpinner) {
+    public static void createMeeting() {
         // perform a click on the "add meeting" fab
         onView(withId(R.id.list_meeting_activity_fab))
                 .perform(click());
         // fill in subject
         onView(withId(R.id.add_meeting_activity_subject_editText))
-                .perform(typeText(subject));
+                .perform(typeText("MeetingTest"));
         // fill in participants
         onView(withId(R.id.add_meeting_activity_participants_editText))
-                .perform(typeText(participants));
+                .perform(typeText("test@test.test"));
         // close keyboard or otherwise can't click on spinner
         closeSoftKeyboard();
         // set date
-        onView(withId(R.id.add_meeting_activity_start_datePicker_textView))
+        onView(withId(R.id.add_meeting_activity_end_datePicker_textView))
                 .perform(click());
         onView(withClassName(equalTo(DatePicker.class.getName())))
-                .perform(PickerActions.setDate(year, month, dayOfMonth));
+                .perform(PickerActions.setDate(1990, 1, 1));
         onView(withId(android.R.id.button1)).perform(click());
         // set time
-        onView(withId(R.id.add_meeting_activity_start_timePicker_textView))
+        onView(withId(R.id.add_meeting_activity_end_timePicker_textView))
                 .perform(click());
         onView(withClassName(equalTo(TimePicker.class.getName())))
-                .perform(PickerActions.setTime(hour, minute));
+                .perform(PickerActions.setTime(12, 45));
         onView(withId(android.R.id.button1)).perform(click());
         // click on room spinner and select first item
         onView(withId(R.id.add_meeting_activity_room_spinner))
                 .perform(click());
         onData(allOf(is(instanceOf(String.class))))
-                .atPosition(positionRoomSpinner)
+                .atPosition(1)
                 .perform(click());
         // click on priority spinner and select first item
         onView(withId(R.id.add_meeting_activity_priority_spinner))
                 .perform(click());
         onData(allOf(is(instanceOf(String.class))))
-                .atPosition(positionPrioritySpinner)
+                .atPosition(1)
                 .perform(click());
         // click on add meeting button
         onView(withId(R.id.add_meeting_activity_add_button))
