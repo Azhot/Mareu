@@ -13,7 +13,7 @@ import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment {
 
-    private Calendar mCalendar;
+    private final Calendar mCalendar;
 
     public TimePickerFragment(Calendar calendar) {
         this.mCalendar = calendar;

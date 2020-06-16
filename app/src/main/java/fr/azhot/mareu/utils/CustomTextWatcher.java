@@ -3,13 +3,11 @@ package fr.azhot.mareu.utils;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import androidx.appcompat.widget.AppCompatEditText;
-
 import static fr.azhot.mareu.ui.meeting_add.AddMeetingActivity.refreshAddButton;
 
 public class CustomTextWatcher implements TextWatcher {
 
-    public CustomTextWatcher(AppCompatEditText appCompatEditText) {
+    public CustomTextWatcher() {
     }
 
     @Override

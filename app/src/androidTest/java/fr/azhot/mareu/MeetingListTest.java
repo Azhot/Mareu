@@ -43,7 +43,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 public class MeetingListTest {
 
     @Rule
-    public ActivityTestRule<ListMeetingActivity> mActivityRule = new ActivityTestRule(ListMeetingActivity.class);
+    public final ActivityTestRule<ListMeetingActivity> mActivityRule = new ActivityTestRule(ListMeetingActivity.class);
     private int mItemsCount;
     private ListMeetingActivity mActivity;
 

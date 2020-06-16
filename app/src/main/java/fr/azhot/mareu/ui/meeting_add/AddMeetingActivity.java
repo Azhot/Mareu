@@ -151,8 +151,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     }
 
     private void setUpEditTexts() { // sets-up the "subject" and "participants" editTexts
-        mBinding.addMeetingActivitySubjectEditText.addTextChangedListener(new CustomTextWatcher(mBinding.addMeetingActivitySubjectEditText));
-        mBinding.addMeetingActivityParticipantsEditText.addTextChangedListener(new CustomTextWatcher(mBinding.addMeetingActivityParticipantsEditText));
+        mBinding.addMeetingActivitySubjectEditText.addTextChangedListener(new CustomTextWatcher());
+        mBinding.addMeetingActivityParticipantsEditText.addTextChangedListener(new CustomTextWatcher());
     }
 
     private void setUpDatePickers() { // sets-up the start date and end date DatePickers

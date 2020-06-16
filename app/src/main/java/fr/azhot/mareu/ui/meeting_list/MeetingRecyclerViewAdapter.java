@@ -29,7 +29,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
     private final Context mContext;
     private List<Meeting> mMeetings;
-    private MeetingRepository mMeetingRepository;
+    private final MeetingRepository mMeetingRepository;
 
     public MeetingRecyclerViewAdapter(Context context, List<Meeting> meetings) {
         this.mContext = context;

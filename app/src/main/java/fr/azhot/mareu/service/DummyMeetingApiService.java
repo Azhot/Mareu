@@ -8,7 +8,7 @@ import fr.azhot.mareu.models.Meeting;
 
 public class DummyMeetingApiService implements MeetingApiService {
 
-    private List<Meeting> mMeetings = DummyMeetingGenerator.generateMeetings();
+    private final List<Meeting> mMeetings = DummyMeetingGenerator.generateMeetings();
 
     /**
      * {@inheritDoc}
