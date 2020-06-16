@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <!-- General -->
-        <string name="app_name">Ma réu</string>
+<resources>
+    <!-- General -->
+    <string name="app_name">Ma réu</string>
 
-        <!-- Meeting cell layout -->
-        <string name="delete_button">Bouton de suppression</string>
+    <!-- Meeting cell layout -->
+    <string name="delete_button">Bouton de suppression</string>
 
-        <!-- Add meeting layout -->
-        <string name="subject_edit_text_hint"><i>Sujet de la réunion …</i></string>
-        <string name="participants_edit_text_hint"><i>Participant 1, participant 2, …</i></string>
-        <string name="notes_edit_text_hint"><i>Notes …</i></string>
+    <!-- Add meeting layout -->
+    <string name="subject_edit_text_hint"><i>Sujet de la réunion …</i></string>
+    <string name="participants_edit_text_hint"><i>Participant 1, participant 2, …</i></string>
+    <string name="notes_edit_text_hint"><i>Notes …</i></string>
 
-        <!-- List meeting activity -->
-        <string name="filter">Filtre</string>
-        <string name="menu_filter_by_date">Filtrer par date</string>
-        <string name="menu_filter_by_meeting_room">Filtrer par salle de réunion</string>
-        <string name="menu_no_filter">Afficher toutes les réunions</string>
+    <!-- List meeting activity -->
+    <string name="filter">Filtre</string>
+    <string name="menu_filter_by_date">Filtrer par date</string>
+    <string name="menu_filter_by_meeting_room">Filtrer par salle de réunion</string>
+    <string name="menu_no_filter">Afficher toutes les réunions</string>
 
-        <!-- Add meeting activity -->
-        <string name="discard_meeting">Supprimer cette réunion ?</string>
-        <string name="yes">Oui</string>
-        <string name="no">Non</string>
-        <string name="hint_meeting_rooms">Choisissez une salle de réunion …</string>
-        <string name="hint_meeting_priorities">Choisissez l\'importance de la réunion …</string>
-        <string name="save">Enregistrer</string>
-        <string name="time_slot_taken_title">Modifiez l\'heure de début ou essayez une autre salle de réunion</string>
-        <string name="time_slot_taken_message">Ce créneau horaire chevauche celui d\'une autre réunion (%1$s à %2$s)</string>
-        <string name="ok">OK</string>
-        <string name="invalid_email">n\'est pas un e-mail valide</string>
+    <!-- Add meeting activity -->
+    <string name="discard_meeting">Supprimer cette réunion ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="hint_meeting_rooms">Choisissez une salle de réunion …</string>
+    <string name="hint_meeting_priorities">Choisissez l\'importance de la réunion …</string>
+    <string name="save">Enregistrer</string>
+    <string name="time_slot_taken_title">Modifiez l\'heure de début ou essayez une autre salle de réunion</string>
+    <string name="time_slot_taken_message">Ce créneau horaire chevauche celui d\'une autre réunion : %1$s démarrant le %2$s à %3$s</string>
+    <string name="ok">OK</string>
+    <string name="invalid_email">n\'est pas un e-mail valide</string>
 
-        <!-- MeetingRoom enum values -->
-        <string name="mario">Mario</string>
-        <string name="luigi">Luigi</string>
-        <string name="peach">Peach</string>
-        <string name="toad">Toad</string>
-        <string name="yoshi">Yoshi</string>
-        <string name="daisy">Daisy</string>
-        <string name="bowser">Bowser</string>
-        <string name="harmonie">Harmonie</string>
-        <string name="waluigi">Waluigi</string>
-        <string name="wario">Wario</string>
+    <!-- MeetingRoom enum values -->
+    <string name="mario">Mario</string>
+    <string name="luigi">Luigi</string>
+    <string name="peach">Peach</string>
+    <string name="toad">Toad</string>
+    <string name="yoshi">Yoshi</string>
+    <string name="daisy">Daisy</string>
+    <string name="bowser">Bowser</string>
+    <string name="harmonie">Harmonie</string>
+    <string name="waluigi">Waluigi</string>
+    <string name="wario">Wario</string>
 
-        <!-- MeetingPriority enum values -->
-        <string name="low">Basse</string>
-        <string name="average">Moyenne</string>
-        <string name="high">Haute</string>
+    <!-- MeetingPriority enum values -->
+    <string name="low">Basse</string>
+    <string name="average">Moyenne</string>
+    <string name="high">Haute</string>
 
 </resources>

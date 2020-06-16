@@ -277,13 +277,12 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         Meeting newMeeting = new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes);
         // check if new meeting time slot does not interfere with another meeting
         for (Meeting meeting : getMeetingRepository().getMeetings()) {
-            // TODO : correct - it overlaps when selecting date
             if (newMeeting.getMeetingRoom() == meeting.getMeetingRoom()
                     && newMeeting.getStartTime().getTimeInMillis() < meeting.getEndTime().getTimeInMillis()
                     && newMeeting.getEndTime().getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.time_slot_taken_title)
-                        .setMessage(getResources().getString(R.string.time_slot_taken_message, getTimeToString(meeting.getStartTime()), getTimeToString(meeting.getEndTime())))
+                        .setMessage(getResources().getString(R.string.time_slot_taken_message, meeting.getSubject(), getDateToString(meeting.getStartTime()), getTimeToString(meeting.getStartTime())))
                         .setNeutralButton(R.string.ok, null)
                         .show();
                 return;
