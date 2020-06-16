@@ -20,11 +20,11 @@ public class Meeting {
     /**
      * Minimum constructor for a {@link Meeting}
      *
-     * @param startTime        an instance of {@link Calendar} representing the start time of the meeting
-     * @param subject          a {@link String} representing the meeting subject
-     * @param participants     an {@link List<String>} representing for each index a meeting participant
-     * @param meetingRoom      a {@link MeetingRoom} member representing the meeting room name
-     * @param meetingPriority  a {@link MeetingPriority} member representing the meeting priority
+     * @param startTime       an instance of {@link Calendar} representing the start time of the meeting
+     * @param subject         a {@link String} representing the meeting subject
+     * @param participants    an {@link List<String>} representing for each index a meeting participant
+     * @param meetingRoom     a {@link MeetingRoom} member representing the meeting room name
+     * @param meetingPriority a {@link MeetingPriority} member representing the meeting priority
      */
     public Meeting(Calendar startTime, String subject, List<String> participants, MeetingRoom meetingRoom, MeetingPriority meetingPriority) {
         this.mId = UUID.randomUUID().toString();
@@ -40,13 +40,13 @@ public class Meeting {
     /**
      * Full constructor for a {@link Meeting} with end time specified
      *
-     * @param startTime         an instance of {@link Calendar} representing the start time of the meeting
-     * @param endTime           an instance of {@link Calendar} representing the end time of the meeting
-     * @param subject           a {@link String} representing the meeting subject
-     * @param participants      an {@link List<String>} representing for each index a meeting participant
-     * @param meetingRoom       a {@link MeetingRoom} member representing the meeting room name
-     * @param meetingPriority   a {@link MeetingPriority} member representing the meeting priority
-     * @param notes             a {@link String} representing the meeting's notes
+     * @param startTime       an instance of {@link Calendar} representing the start time of the meeting
+     * @param endTime         an instance of {@link Calendar} representing the end time of the meeting
+     * @param subject         a {@link String} representing the meeting subject
+     * @param participants    an {@link List<String>} representing for each index a meeting participant
+     * @param meetingRoom     a {@link MeetingRoom} member representing the meeting room name
+     * @param meetingPriority a {@link MeetingPriority} member representing the meeting priority
+     * @param notes           a {@link String} representing the meeting's notes
      */
     public Meeting(Calendar startTime, Calendar endTime, String subject, List<String> participants, MeetingRoom meetingRoom, MeetingPriority meetingPriority, String notes) {
         this.mId = UUID.randomUUID().toString();

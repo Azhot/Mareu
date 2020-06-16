@@ -9,10 +9,7 @@ import static fr.azhot.mareu.ui.meeting_add.AddMeetingActivity.refreshAddButton;
 
 public class CustomTextWatcher implements TextWatcher {
 
-    private AppCompatEditText mAppCompatEditText;
-
     public CustomTextWatcher(AppCompatEditText appCompatEditText) {
-        this.mAppCompatEditText = appCompatEditText;
     }
 
     @Override

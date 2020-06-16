@@ -24,17 +24,11 @@ public enum MeetingRoom {
 
     /**
      * Constructor
+     *
      * @param stringResource a string resource id
      */
     MeetingRoom(final int stringResource) {
         this.mStringResource = stringResource;
-    }
-
-    /**
-     * @return a {@link MeetingRoom} member's mStringResource
-     */
-    public int getStringResource() {
-        return mStringResource;
     }
 
     /**
@@ -54,5 +48,12 @@ public enum MeetingRoom {
      */
     public static MeetingRoom getMeetingRoomByPosition(final int position) {
         return MeetingRoom.values()[position];
+    }
+
+    /**
+     * @return a {@link MeetingRoom} member's mStringResource
+     */
+    public int getStringResource() {
+        return mStringResource;
     }
 }

@@ -32,7 +32,7 @@ public class MeetingRepositoryTest {
 
     @Before
     public void setup() {
-        mMeetingRepository = DI.getMeetingRepository();
+        mMeetingRepository = DI.createMeetingRepository();
     }
 
     @Test
@@ -44,7 +44,7 @@ public class MeetingRepositoryTest {
     }
 
     @Test
-    public void  createMeetingWithSuccess() {
+    public void createMeetingWithSuccess() {
         List<Meeting> meetings = mMeetingRepository.getMeetings();
         Meeting meeting = new Meeting(Calendar.getInstance(), "MeetingTest", Collections.singletonList("test@test.test"), MeetingRoom.MARIO, MeetingPriority.AVERAGE);
         mMeetingRepository.createMeeting(meeting);
@@ -52,7 +52,7 @@ public class MeetingRepositoryTest {
     }
 
     @Test
-    public void  deleteMeetingWithSuccess() {
+    public void deleteMeetingWithSuccess() {
         List<Meeting> meetings = mMeetingRepository.getMeetings();
         Meeting meeting = new Meeting(Calendar.getInstance(), "MeetingTest", Collections.singletonList("test@test.test"), MeetingRoom.MARIO, MeetingPriority.AVERAGE);
         meetings.add(meeting);
@@ -63,7 +63,7 @@ public class MeetingRepositoryTest {
     @Test
     public void getMeetingsFilteredByDateWithSuccess() {
         List<Meeting> meetings = mMeetingRepository.getMeetings();
-        for(Meeting meeting : meetings) {
+        for (Meeting meeting : meetings) {
             meeting.getStartTime().set(2020, Calendar.JUNE, 1);
         }
         meetings.get(0).getStartTime().set(2020, Calendar.JUNE, 2);
@@ -78,7 +78,7 @@ public class MeetingRepositoryTest {
     @Test
     public void getMeetingsFilteredByRoomWithSuccess() {
         List<Meeting> meetings = mMeetingRepository.getMeetings();
-        for(Meeting meeting : meetings) {
+        for (Meeting meeting : meetings) {
             meeting.setMeetingRoom(MeetingRoom.MARIO);
         }
         meetings.get(0).setMeetingRoom(MeetingRoom.LUIGI);

@@ -108,6 +108,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
             finish(); // if user did not input anything material, finish activity
         }
     }
+
     private void initCalendars() {
         mStartTimeCalendar = Calendar.getInstance();
         mStartTimeCalendar.add(Calendar.HOUR, 1);

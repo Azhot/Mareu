@@ -42,10 +42,9 @@ import static org.hamcrest.core.IsNull.notNullValue;
 @RunWith(AndroidJUnit4.class)
 public class MeetingListTest {
 
-    private int mItemsCount;
-
     @Rule
     public ActivityTestRule<ListMeetingActivity> mActivityRule = new ActivityTestRule(ListMeetingActivity.class);
+    private int mItemsCount;
     private ListMeetingActivity mActivity;
 
     @Before

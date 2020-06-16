@@ -17,6 +17,7 @@ public enum MeetingPriority {
 
     /**
      * Constructor
+     *
      * @param stringResource a string resource id
      */
     MeetingPriority(final int stringResource) {
