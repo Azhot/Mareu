@@ -3,7 +3,9 @@ package fr.azhot.mareu.utils;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import static fr.azhot.mareu.ui.meeting_add.AddMeetingActivity.refreshAddButton;
+import org.greenrobot.eventbus.EventBus;
+
+import fr.azhot.mareu.events.AfterTextChangedEvent;
 
 public class CustomTextWatcher implements TextWatcher {
 
@@ -22,6 +24,6 @@ public class CustomTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        refreshAddButton();
+        EventBus.getDefault().post(new AfterTextChangedEvent());
     }
 }

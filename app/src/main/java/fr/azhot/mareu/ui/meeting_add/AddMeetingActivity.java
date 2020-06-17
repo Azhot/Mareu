@@ -19,9 +19,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +35,7 @@ import java.util.List;
 import fr.azhot.mareu.R;
 import fr.azhot.mareu.base.BaseActivity;
 import fr.azhot.mareu.databinding.ActivityAddMeetingBinding;
+import fr.azhot.mareu.events.AfterTextChangedEvent;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.models.MeetingPriority;
 import fr.azhot.mareu.models.MeetingRoom;
@@ -38,6 +43,8 @@ import fr.azhot.mareu.utils.CustomTextWatcher;
 
 import static fr.azhot.mareu.utils.TimeUtils.getDateToString;
 import static fr.azhot.mareu.utils.TimeUtils.getTimeToString;
+import static fr.azhot.mareu.utils.TimeUtils.initEndCalendar;
+import static fr.azhot.mareu.utils.TimeUtils.initStartCalendar;
 import static fr.azhot.mareu.utils.TimeUtils.setTimeOfDay;
 
 public class AddMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -48,18 +55,24 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     private Calendar mEndTimeCalendar;
     private View mClickedView;
 
-    public static void refreshAddButton() { // refreshes the add meeting button state (disabled or enabled)
-        mBinding.addMeetingActivityAddButton.setEnabled(mBinding.addMeetingActivitySubjectEditText.length() != 0
-                && mBinding.addMeetingActivityParticipantsEditText.length() != 0
-                && mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() != 0
-                && mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initCalendars();
+        mStartTimeCalendar = initStartCalendar();
+        mEndTimeCalendar = initEndCalendar(mStartTimeCalendar);
         initUI();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -109,17 +122,10 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
     }
 
-    private void initCalendars() {
-        mStartTimeCalendar = Calendar.getInstance();
-        mStartTimeCalendar.add(Calendar.HOUR, 1);
-        mStartTimeCalendar.set(Calendar.MINUTE, 0);
-        mStartTimeCalendar.set(Calendar.SECOND, 0);
-        mStartTimeCalendar.set(Calendar.MILLISECOND, 0);
-        mEndTimeCalendar = (Calendar) mStartTimeCalendar.clone();
-        mEndTimeCalendar.add(Calendar.MINUTE, 45);
-    }
-
     private void initUI() { // init UI components
+        // TODO : delete and cf. add meeting layout
+        // todo : fragments ?
+        // todo : alternative layouts ?
         if (!getResources().getBoolean(R.bool.isTablet)) { // adapt UI depending on device
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
@@ -129,8 +135,10 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         setUpButtons();
         refreshAddButton();
         setUpEditTexts();
-        setUpDatePickers();
-        setUpTimePickers();
+        setUpDatePicker(mBinding.addMeetingActivityStartDatePickerTextView, mStartTimeCalendar);
+        setUpDatePicker(mBinding.addMeetingActivityEndDatePickerTextView, mEndTimeCalendar);
+        setUpTimePicker(mBinding.addMeetingActivityStartTimePickerTextView, mStartTimeCalendar);
+        setUpTimePicker(mBinding.addMeetingActivityEndTimePickerTextView, mEndTimeCalendar);
         setUpSpinner(getString(R.string.hint_meeting_rooms), MeetingRoom.getMeetingRoomsStringResources(), mBinding.addMeetingActivityRoomSpinner); // set-up meeting rooms spinner
         setUpSpinner(getString(R.string.hint_meeting_priorities), MeetingPriority.getMeetingPrioritiesStringResources(), mBinding.addMeetingActivityPrioritySpinner); // set-up meeting priority spinner
     }
@@ -155,44 +163,26 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         mBinding.addMeetingActivityParticipantsEditText.addTextChangedListener(new CustomTextWatcher());
     }
 
-    private void setUpDatePickers() { // sets-up the start date and end date DatePickers
-        mBinding.addMeetingActivityStartDatePickerTextView.setText(getDateToString(mStartTimeCalendar)); // meeting start date datePicker
-        mBinding.addMeetingActivityStartDatePickerTextView.setOnClickListener(new View.OnClickListener() {
+    private void setUpDatePicker(final AppCompatTextView textView, final Calendar calendar) { // sets-up the start date and end date DatePickers
+        textView.setText(getDateToString(calendar));
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mClickedView = v;
-                DialogFragment datePicker = new DatePickerFragment(mStartTimeCalendar);
-                datePicker.show(getSupportFragmentManager(), "add_meeting_start_datePicker");
-            }
-        });
-        mBinding.addMeetingActivityEndDatePickerTextView.setText(getDateToString(mEndTimeCalendar)); // meeting end date datePicker
-        mBinding.addMeetingActivityEndDatePickerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mClickedView = v;
-                DialogFragment datePicker = new DatePickerFragment(mEndTimeCalendar);
-                datePicker.show(getSupportFragmentManager(), "add_meeting_end_datePicker");
+                DialogFragment datePicker = new DatePickerFragment(calendar);
+                datePicker.show(getSupportFragmentManager(), String.valueOf(textView.getId()));
             }
         });
     }
 
-    private void setUpTimePickers() { // sets-up the start time and end time TimePickers
-        mBinding.addMeetingActivityStartTimePickerTextView.setText(getTimeToString(mStartTimeCalendar)); // meeting start time timePicker
-        mBinding.addMeetingActivityStartTimePickerTextView.setOnClickListener(new View.OnClickListener() {
+    private void setUpTimePicker(final AppCompatTextView textView, final Calendar calendar) { // sets-up the start time and end time TimePickers
+        textView.setText(getTimeToString(calendar)); // meeting start time timePicker
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mClickedView = v;
-                DialogFragment timePicker = new TimePickerFragment(mStartTimeCalendar);
-                timePicker.show(getSupportFragmentManager(), "add_meeting_start_timePicker");
-            }
-        });
-        mBinding.addMeetingActivityEndTimePickerTextView.setText(getTimeToString(mEndTimeCalendar)); // meeting end time timePicker
-        mBinding.addMeetingActivityEndTimePickerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mClickedView = v;
-                DialogFragment timePicker = new TimePickerFragment(mEndTimeCalendar);
-                timePicker.show(getSupportFragmentManager(), "add_meeting_end_timePicker");
+                DialogFragment timePicker = new TimePickerFragment(calendar);
+                timePicker.show(getSupportFragmentManager(), String.valueOf(textView.getId()));
             }
         });
     }
@@ -261,6 +251,13 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
     }
 
+    public void refreshAddButton() { // refreshes the add meeting button state (disabled or enabled)
+        mBinding.addMeetingActivityAddButton.setEnabled(mBinding.addMeetingActivitySubjectEditText.length() != 0
+                && mBinding.addMeetingActivityParticipantsEditText.length() != 0
+                && mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() != 0
+                && mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0);
+    }
+
     private void onSubmit() { // fired when clicking on "save" button
         String subject = mBinding.addMeetingActivitySubjectEditText.getText().toString();
         List<String> participants = new ArrayList<>(Arrays.asList(mBinding.addMeetingActivityParticipantsEditText.getText().toString().trim().split("\\s*,\\s*")));
@@ -294,5 +291,10 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         resultIntent.putExtra(NEW_MEETING_EXTRA, newMeetingJson);
         setResult(RESULT_OK, resultIntent);
         finish();
+    }
+
+    @Subscribe
+    public void onAfterTextChanged(AfterTextChangedEvent event) {
+        refreshAddButton();
     }
 }

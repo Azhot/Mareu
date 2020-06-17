@@ -139,7 +139,4 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
         mMeetings = meetings;
         mMeetingRecyclerViewAdapter.setMeetingList(mMeetings);
     }
-
-    // todo : check tests
-    // todo : tests should create new meetings using the end time
 }
