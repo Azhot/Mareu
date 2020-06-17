@@ -1,5 +1,4 @@
 package fr.azhot.mareu.ui.meeting_add;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,24 +14,19 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
-
 import com.google.gson.Gson;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-
 import fr.azhot.mareu.R;
 import fr.azhot.mareu.base.BaseActivity;
 import fr.azhot.mareu.databinding.ActivityAddMeetingBinding;
@@ -41,7 +35,6 @@ import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.models.MeetingPriority;
 import fr.azhot.mareu.models.MeetingRoom;
 import fr.azhot.mareu.utils.CustomTextWatcher;
-
 import static fr.azhot.mareu.utils.TimeUtils.getDateToString;
 import static fr.azhot.mareu.utils.TimeUtils.getTimeToString;
 import static fr.azhot.mareu.utils.TimeUtils.initEndCalendar;
