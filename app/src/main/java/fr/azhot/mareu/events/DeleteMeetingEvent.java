@@ -1,14 +1,16 @@
 package fr.azhot.mareu.events;
 
-import fr.azhot.mareu.MaReuApplication;
+import android.content.Context;
+
 import fr.azhot.mareu.base.BaseActivity;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.repository.MeetingRepository;
 
-public class DeleteMeetingEvent extends BaseActivity {
+public class DeleteMeetingEvent {
 
-    public DeleteMeetingEvent(Meeting meeting) {
-        MeetingRepository meetingRepository = ((MaReuApplication) getApplication()).getMeetingRepository();
+    public DeleteMeetingEvent(Context context, Meeting meeting) {
+        BaseActivity activity = (BaseActivity) context;
+        MeetingRepository meetingRepository = activity.getMeetingRepository();
         meetingRepository.deleteMeeting(meeting);
     }
 }

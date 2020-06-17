@@ -70,7 +70,9 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
                 meetingDetails.append(getTimeToString(meeting.getEndTime()));
                 Toast toast = Toast.makeText(mContext, meetingDetails, Toast.LENGTH_SHORT);
                 AppCompatTextView textView = (AppCompatTextView) toast.getView().findViewById(android.R.id.message);
-                if (textView != null) textView.setGravity(Gravity.CENTER);
+                if (textView != null) {
+                    textView.setGravity(Gravity.CENTER);
+                }
                 toast.show();
             }
         });
@@ -96,13 +98,13 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             // set-up the priority image color
             switch (meeting.getMeetingPriority()) {
                 case LOW:
-                    mBinding.meetingCellPriorityImageView.setImageResource(R.drawable.ic_low_priority_50);
+                    mBinding.meetingCellPriorityImageView.setImageResource(R.drawable.ic_low_priority);
                     break;
                 case AVERAGE:
-                    mBinding.meetingCellPriorityImageView.setImageResource(R.drawable.ic_average_priority_50);
+                    mBinding.meetingCellPriorityImageView.setImageResource(R.drawable.ic_average_priority);
                     break;
                 case HIGH:
-                    mBinding.meetingCellPriorityImageView.setImageResource(R.drawable.ic_high_priority_50);
+                    mBinding.meetingCellPriorityImageView.setImageResource(R.drawable.ic_high_priority);
                     break;
                 default:
                     Log.e(TAG, "Cannot set-up the priority of meeting with id : " + meeting.getId());
@@ -133,7 +135,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             mBinding.meetingCellDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
+                    EventBus.getDefault().post(new DeleteMeetingEvent(mContext, meeting));
                     mMeetings.remove(meeting); // to cope with updating filtered lists
                     notifyDataSetChanged();
                 }

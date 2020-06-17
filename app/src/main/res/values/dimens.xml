@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_margin">16dp</dimen>
+    <dimen name="double_margin">32dp</dimen>
+    <dimen name="standard_padding">8dp</dimen>
+    <dimen name="double_padding">16dp</dimen>
+    <dimen name="triple_padding">24dp</dimen>
+    <dimen name="quad_padding">32dp</dimen>
+    <dimen name="standard_text_padding">8dp</dimen>
+    <dimen name="standard_text_size">14sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="time_pickers_text_size">15sp</dimen>
+    <dimen name="subject_text_size">15sp</dimen>
+    <dimen name="priority_ic">48dp</dimen>
+    <dimen name="delete_button">24dp</dimen>
+    <dimen name="back_arrow">24dp</dimen>
+    <dimen name="margin_back_arrow">32dp</dimen>
+    <dimen name="margin_end_save_button">24dp</dimen>
+    <dimen name="height_save_button">32dp</dimen>
+    <dimen name="margin_top_scrollview">88dp</dimen>
+</resources>

@@ -5,27 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:paddingStart="8dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="8dp"
-    android:paddingBottom="16dp">
+    android:paddingStart="@dimen/standard_padding"
+    android:paddingTop="@dimen/double_padding"
+    android:paddingEnd="@dimen/standard_padding"
+    android:paddingBottom="@dimen/double_padding">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/meeting_cell_priority_imageView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/priority_ic"
+        android:layout_height="@dimen/priority_ic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_low_priority_50" />
+        app:srcCompat="@drawable/ic_low_priority" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/meeting_cell_meeting_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:paddingStart="@dimen/standard_padding"
+        android:paddingEnd="@dimen/standard_padding"
         android:textColor="@color/colorText"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/meeting_cell_participants_textView"
@@ -39,8 +39,8 @@
         android:id="@+id/meeting_cell_participants_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:paddingStart="@dimen/standard_padding"
+        android:paddingEnd="@dimen/standard_padding"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/colorText"
@@ -52,14 +52,14 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/meeting_cell_delete_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/delete_button"
+        android:layout_height="@dimen/delete_button"
         android:background="@null"
         android:contentDescription="@string/delete_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_delete_24" />
+        app:srcCompat="@drawable/ic_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

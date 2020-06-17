@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import fr.azhot.mareu.R;
 import fr.azhot.mareu.base.BaseActivity;
@@ -50,7 +51,7 @@ import static fr.azhot.mareu.utils.TimeUtils.setTimeOfDay;
 public class AddMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     public static final String NEW_MEETING_EXTRA = "new_meeting";
-    private static ActivityAddMeetingBinding mBinding;
+    private ActivityAddMeetingBinding mBinding;
     private Calendar mStartTimeCalendar;
     private Calendar mEndTimeCalendar;
     private View mClickedView;
@@ -103,10 +104,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
 
     @Override
     public void onBackPressed() { // override onBackPressed to set-up an AlertDialog if user tries to back without saving
-        if (mBinding.addMeetingActivitySubjectEditText.length() != 0
-                || mBinding.addMeetingActivityParticipantsEditText.length() != 0
-                || mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() != 0
-                || mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0) {
+        if (mBinding.addMeetingActivitySubjectEditText.length() + mBinding.addMeetingActivityParticipantsEditText.length() + mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() + mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0) {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.discard_meeting)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -123,9 +121,6 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     }
 
     private void initUI() { // init UI components
-        // todo : fragments ?
-        // todo : alternative layouts ?
-        // todo : dimens
         mBinding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
@@ -270,8 +265,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     }
 
     private void onSubmit() { // fired when clicking on "save" button
-        String subject = mBinding.addMeetingActivitySubjectEditText.getText().toString();
-        List<String> participants = new ArrayList<>(Arrays.asList(mBinding.addMeetingActivityParticipantsEditText.getText().toString().trim().split("\\s*,\\s*")));
+        String subject = Objects.requireNonNull(mBinding.addMeetingActivitySubjectEditText.getText(), "Subject editText must not be null").toString();
+        List<String> participants = new ArrayList<>(Arrays.asList(Objects.requireNonNull(mBinding.addMeetingActivityParticipantsEditText.getText(), "Participants editText must not be null").toString().trim().split("\\s*,\\s*")));
         // check whether participants emails are valid
         for (String participant : participants) {
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(participant).matches()) {
@@ -282,13 +277,11 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
         MeetingRoom meetingRoom = MeetingRoom.getMeetingRoomByPosition(mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
         MeetingPriority meetingPriority = MeetingPriority.getMeetingPriorityByPosition(mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
-        String notes = mBinding.addMeetingActivityNotesEditText.getText().toString();
+        String notes = Objects.requireNonNull(mBinding.addMeetingActivityNotesEditText.getText(), "Notes editText must not be null").toString();
         Meeting newMeeting = new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes);
         // check if new meeting time slot does not interfere with another meeting
         for (Meeting meeting : getMeetingRepository().getMeetings()) {
-            if (newMeeting.getMeetingRoom() == meeting.getMeetingRoom()
-                    && newMeeting.getStartTime().getTimeInMillis() < meeting.getEndTime().getTimeInMillis()
-                    && newMeeting.getEndTime().getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {
+            if (newMeeting.getMeetingRoom() == meeting.getMeetingRoom() && newMeeting.getStartTime().getTimeInMillis() < meeting.getEndTime().getTimeInMillis() && newMeeting.getEndTime().getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.time_slot_taken_title)
                         .setMessage(getResources().getString(R.string.time_slot_taken_message, meeting.getSubject(), getDateToString(meeting.getStartTime()), getTimeToString(meeting.getStartTime())))
