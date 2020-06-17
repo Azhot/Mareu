@@ -5,10 +5,10 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -123,15 +123,13 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     }
 
     private void initUI() { // init UI components
-        // TODO : delete and cf. add meeting layout
         // todo : fragments ?
         // todo : alternative layouts ?
-        if (!getResources().getBoolean(R.bool.isTablet)) { // adapt UI depending on device
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+        // todo : dimens
         mBinding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
         View view = mBinding.getRoot();
         setContentView(view);
+        setUpScrollView();
         setUpButtons();
         refreshAddButton();
         setUpEditTexts();
@@ -141,6 +139,19 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         setUpTimePicker(mBinding.addMeetingActivityEndTimePickerTextView, mEndTimeCalendar);
         setUpSpinner(getString(R.string.hint_meeting_rooms), MeetingRoom.getMeetingRoomsStringResources(), mBinding.addMeetingActivityRoomSpinner); // set-up meeting rooms spinner
         setUpSpinner(getString(R.string.hint_meeting_priorities), MeetingPriority.getMeetingPrioritiesStringResources(), mBinding.addMeetingActivityPrioritySpinner); // set-up meeting priority spinner
+    }
+
+    private void setUpScrollView() { // sets-up the scrollView to show top border when scrolled-down
+        mBinding.addMeetingActivityScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (mBinding.addMeetingActivityScrollView.getScrollY() != 0) {
+                    mBinding.addMeetingActivityScrollView.setBackground(getDrawable(R.drawable.bg_with_top_border));
+                } else {
+                    mBinding.addMeetingActivityScrollView.setBackground(getDrawable(R.drawable.bg_with_bottom_border));
+                }
+            }
+        });
     }
 
     private void setUpButtons() { // sets-up the "save" and "back" buttons
