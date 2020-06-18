@@ -5,11 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import fr.azhot.mareu.MaReuApplication;
 import fr.azhot.mareu.repository.MeetingRepository;
+import fr.azhot.mareu.repository.UserRepository;
 
 public class BaseActivity extends AppCompatActivity {
 
     public MeetingRepository getMeetingRepository() {
         return ((MaReuApplication) getApplication()).getMeetingRepository();
+    }
+
+    public UserRepository getUserRepository() {
+        return ((MaReuApplication) getApplication()).getUserRepository();
     }
 
     @VisibleForTesting

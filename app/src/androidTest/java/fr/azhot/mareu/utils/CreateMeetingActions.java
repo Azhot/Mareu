@@ -30,7 +30,7 @@ public class CreateMeetingActions {
                 .perform(typeText("MeetingTest"));
         // fill in participants
         onView(withId(R.id.add_meeting_activity_participants_editText))
-                .perform(typeText("test@test.test"));
+                .perform(typeText("test@lamazone.com"));
         // close keyboard or otherwise can't click on spinner
         closeSoftKeyboard();
         // set date

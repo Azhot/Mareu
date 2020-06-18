@@ -267,7 +267,10 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         List<String> participants = new ArrayList<>(Arrays.asList(Objects.requireNonNull(mBinding.addMeetingActivityParticipantsEditText.getText(), "Participants editText must not be null").toString().trim().split("\\s*,\\s*")));
         // check whether participants emails are valid
         for (String participant : participants) {
-            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(participant).matches()) {
+            // first check if valid email to avoid unnecessary call to API
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(participant).matches()
+                    || !participant.endsWith(getString(R.string.company_domain_name))
+                    || !getUserRepository().getUsersEmail().contains(participant)) {
                 Toast toast = Toast.makeText(this, "\"" + participant + "\" " + getString(R.string.invalid_email), Toast.LENGTH_LONG);
                 toast.show();
                 return;

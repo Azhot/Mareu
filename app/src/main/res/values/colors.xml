@@ -5,7 +5,7 @@
     <color name="colorAccent">#448AFF</color>
     <color name="colorText">#000032</color>
     <color name="colorTextHint">#919191</color>
-    <color name="colorLowImportance">#A5D6A7</color>
-    <color name="colorMediumImportance">#FFCC80</color>
-    <color name="colorHighImportance">#EF9A9A</color>
+    <color name="colorLowPriority">#A5D6A7</color>
+    <color name="colorAveragePriority">#FFCC80</color>
+    <color name="colorHighPriority">#EF9A9A</color>
 </resources>
