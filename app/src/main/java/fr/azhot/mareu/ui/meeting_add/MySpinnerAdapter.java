@@ -14,9 +14,19 @@ import java.util.List;
 import fr.azhot.mareu.R;
 
 public class MySpinnerAdapter extends ArrayAdapter<String> {
+
+    List<String> mObjects;
+
     public MySpinnerAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
+        this.mObjects = objects;
         this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    }
+
+    public void setList(List<String> objects) {
+        this.mObjects.clear();
+        this.mObjects.addAll(objects);
+        this.notifyDataSetChanged();
     }
 
     @Override
