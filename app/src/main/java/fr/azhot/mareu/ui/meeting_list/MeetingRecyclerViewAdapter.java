@@ -12,16 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 import fr.azhot.mareu.R;
 import fr.azhot.mareu.databinding.CellMeetingBinding;
-import fr.azhot.mareu.events.DeleteMeetingEvent;
 import fr.azhot.mareu.models.Meeting;
+import fr.azhot.mareu.repository.MeetingRepository;
 
 import static fr.azhot.mareu.utils.TimeUtils.getDateToString;
 import static fr.azhot.mareu.utils.TimeUtils.getTimeToString;
@@ -30,10 +28,12 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
 
     private final Context mContext;
     private List<Meeting> mMeetings;
+    private MeetingRepository mMeetingRepository;
 
-    public MeetingRecyclerViewAdapter(Context context, List<Meeting> meetings) {
+    public MeetingRecyclerViewAdapter(Context context, List<Meeting> meetings, MeetingRepository meetingRepository) {
         this.mContext = context;
         this.mMeetings = meetings;
+        this.mMeetingRepository = meetingRepository;
     }
 
     public void setMeetingList(List<Meeting> meetings) {
@@ -135,7 +135,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             mBinding.meetingCellDeleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new DeleteMeetingEvent(mContext, meeting));
+                    mMeetingRepository.deleteMeeting(meeting);
                     mMeetings.remove(meeting); // to cope with updating filtered lists
                     notifyDataSetChanged();
                 }

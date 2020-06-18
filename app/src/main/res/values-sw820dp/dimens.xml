@@ -10,7 +10,7 @@
     <dimen name="standard_text_size">20sp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="time_pickers_text_size">22sp</dimen>
-    <dimen name="subject_text_size">22sp</dimen>
+    <dimen name="subject_text_size">26sp</dimen>
     <dimen name="priority_ic">72dp</dimen>
     <dimen name="delete_button">32dp</dimen>
     <dimen name="back_arrow">36dp</dimen>

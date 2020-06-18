@@ -5,7 +5,7 @@ import android.text.TextWatcher;
 
 import org.greenrobot.eventbus.EventBus;
 
-import fr.azhot.mareu.events.AfterTextChangedEvent;
+import fr.azhot.mareu.events.MustRefreshAddButtonEvent;
 
 public class CustomTextWatcher implements TextWatcher {
 
@@ -24,6 +24,6 @@ public class CustomTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        EventBus.getDefault().post(new AfterTextChangedEvent());
+        EventBus.getDefault().post(new MustRefreshAddButtonEvent());
     }
 }

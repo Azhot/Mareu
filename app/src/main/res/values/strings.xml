@@ -23,9 +23,7 @@
     <string name="hint_meeting_rooms">Select meeting room …</string>
     <string name="hint_meeting_priorities">Select meeting priority …</string>
     <string name="save">Save</string>
-    <string name="time_slot_taken_title">Change start time or try with another meeting room</string>
-    <string name="time_slot_taken_message">This time slot overlaps that of another meeting : %1$s starting on %2$s at %3$s</string>
-    <string name="ok">OK</string>
+    <string name="no_room_available">No room available for this time slot …</string>
     <string name="invalid_email">is an invalid email</string>
 
     <!-- MeetingRoom enum values -->

@@ -17,7 +17,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.meeting_list.ListMeetingActivity"
-            android:theme="@style/AppTheme.LauncherTheme">
+            android:theme="@style/AppTheme.ListMeetingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

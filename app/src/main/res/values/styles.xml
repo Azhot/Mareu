@@ -6,7 +6,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/standard_text_size</item>
     </style>
 
     <!-- Filter icon looks -->
@@ -15,8 +14,8 @@
         <item name="android:background">?android:attr/actionBarItemBackground</item>
     </style>
 
-    <!-- Launcher activity theme -->
-    <style name="AppTheme.LauncherTheme" parent="AppTheme">
+    <!-- ListMeetingActivity theme -->
+    <style name="AppTheme.ListMeetingActivity" parent="AppTheme">
         <item name="android:actionOverflowButtonStyle">@style/FilterMenuIcon</item>
     </style>
 
@@ -30,12 +29,14 @@
     <style name="hintItemStyle">
         <item name="android:textColor">@color/colorTextHint</item>
         <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/standard_text_size</item>
     </style>
 
     <!-- Spinner item style -->
     <style name="spinnerItemStyle">
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/standard_text_size</item>
     </style>
 
     <!-- Dropdown spinner style -->
@@ -43,6 +44,7 @@
         <item name="android:textColor">@color/colorText</item>
         <item name="android:textStyle">normal</item>
         <item name="android:padding">@dimen/standard_padding</item>
+        <item name="android:textSize">@dimen/standard_text_size</item>
     </style>
 
 </resources>

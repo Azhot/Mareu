@@ -1,5 +1,9 @@
 package fr.azhot.mareu;
 
+import android.widget.DatePicker;
+import android.widget.TimePicker;
+
+import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -13,14 +17,23 @@ import fr.azhot.mareu.ui.meeting_list.ListMeetingActivity;
 import fr.azhot.mareu.utils.CreateMeetingActions;
 import fr.azhot.mareu.utils.RecyclerViewItemCountAssertion;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 /**
@@ -60,18 +73,37 @@ public class AddMeetingTest {
     }
 
     /**
-     * When trying to add a meeting that overlaps another meeting, an AlterDialog is displayed
+     * When trying to add a meeting that overlaps another meeting, the MeetingRoom spinner is updated
      */
     @Test
     public void myMeetingList_displayAlertDialogIfOverlaps() {
         // first create a meeting at a definite date (distant), time and room
         CreateMeetingActions.createMeeting();
 
-        // then try to create a meeting at the same date, time and room
-        CreateMeetingActions.createMeeting();
+        // then start to create a meeting at the same date, time
+        // perform a click on the "add meeting" fab
+        onView(withId(R.id.list_meeting_activity_fab))
+                .perform(click());
+        // set date
+        onView(withId(R.id.add_meeting_activity_end_datePicker_textView))
+                .perform(click());
+        onView(withClassName(equalTo(DatePicker.class.getName())))
+                .perform(PickerActions.setDate(1990, 1, 1));
+        onView(withId(android.R.id.button1)).perform(click());
+        // set time
+        onView(withId(R.id.add_meeting_activity_end_timePicker_textView))
+                .perform(click());
+        onView(withClassName(equalTo(TimePicker.class.getName())))
+                .perform(PickerActions.setTime(12, 45));
+        onView(withId(android.R.id.button1)).perform(click());
 
-        // finally check that the AlertDialog is displayed
-        onView(withText(R.string.time_slot_taken_title)).check(matches(isDisplayed()));
+        // finally check that the MeetingRoom spinner does not show Mario room anymore
+        onView(withId(R.id.add_meeting_activity_room_spinner))
+                .perform(click());
+        onData(allOf(is(instanceOf(String.class))))
+                .atPosition(1)
+                .perform(click());
+        onView(withId(R.id.add_meeting_activity_room_spinner)).check(matches(not(withSpinnerText(R.string.mario))));
     }
 
     /**
