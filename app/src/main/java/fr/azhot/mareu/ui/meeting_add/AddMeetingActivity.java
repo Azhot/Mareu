@@ -81,7 +81,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
             mBinding.addMeetingActivityEndDatePickerTextView.setText(getDateToString(mEndTimeCalendar));
             refreshStartTimeDisplay();
         }
-        refreshAvailableMeetingRooms(getString(R.string.hint_meeting_rooms), MeetingRoom.getMeetingRoomsStringResources(), mBinding.addMeetingActivityRoomSpinner);
+        refreshAvailableMeetingRooms();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
             mBinding.addMeetingActivityEndTimePickerTextView.setText(getTimeToString(mEndTimeCalendar));
             refreshStartTimeDisplay();
         }
-        refreshAvailableMeetingRooms(getString(R.string.hint_meeting_rooms), MeetingRoom.getMeetingRoomsStringResources(), mBinding.addMeetingActivityRoomSpinner);
+        refreshAvailableMeetingRooms();
     }
 
     @Override
@@ -127,6 +127,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         setUpDatePickers();
         setUpTimePickers();
         setUpSpinner(getString(R.string.hint_meeting_rooms), MeetingRoom.getMeetingRoomsStringResources(), mBinding.addMeetingActivityRoomSpinner); // set-up meeting rooms spinner
+        refreshAvailableMeetingRooms();
         setUpSpinner(getString(R.string.hint_meeting_priorities), MeetingPriority.getMeetingPrioritiesStringResources(), mBinding.addMeetingActivityPrioritySpinner); // set-up meeting priority spinner
     }
 
@@ -216,10 +217,10 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
     }
 
-    private void refreshAvailableMeetingRooms(String hint, List<Integer> stringResources, AppCompatSpinner spinner) { // refreshes list of available meeting rooms at a set time slot
+    private void refreshAvailableMeetingRooms() { // refreshes list of available meeting rooms at a set time slot
         List<String> spinnerList = new ArrayList<>();
-        spinnerList.add(hint); // add hint
-        for (int stringResource : stringResources) {
+        spinnerList.add(getString(R.string.hint_meeting_rooms)); // add hint
+        for (int stringResource : MeetingRoom.getMeetingRoomsStringResources()) {
             spinnerList.add(getString(stringResource));
         }
         for (Meeting meeting : getMeetingRepository().getMeetings()) {
@@ -233,8 +234,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
             spinnerList.clear();
             spinnerList.add(getString(R.string.no_room_available));
         }
-        ((MySpinnerAdapter) spinner.getAdapter()).setList(spinnerList);
-        spinner.setSelection(0);
+        ((MySpinnerAdapter) mBinding.addMeetingActivityRoomSpinner.getAdapter()).setList(spinnerList);
+        mBinding.addMeetingActivityRoomSpinner.setSelection(0);
     }
 
     private void refreshEndTimeDisplay() { // refreshes end time (+45 minutes) if startTime + 2700000 milliseconds (45 min) > endTime
