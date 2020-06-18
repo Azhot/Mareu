@@ -23,6 +23,10 @@ public class MySpinnerAdapter extends ArrayAdapter<String> {
         this.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
+    public List<String> getList() {
+        return mObjects;
+    }
+
     public void setList(List<String> objects) {
         this.mObjects.clear();
         this.mObjects.addAll(objects);

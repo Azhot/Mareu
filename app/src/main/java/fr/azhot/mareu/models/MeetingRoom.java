@@ -43,14 +43,6 @@ public enum MeetingRoom {
     }
 
     /**
-     * @param position an {@link Integer} representing the position of the requested member in the enum
-     * @return a {@link MeetingRoom} member
-     */
-    public static MeetingRoom getMeetingRoomByPosition(final int position) {
-        return MeetingRoom.values()[position];
-    }
-
-    /**
      * @return a {@link MeetingRoom} member's mStringResource
      */
     public int getStringResource() {

@@ -266,24 +266,28 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     private void onSubmit() { // fired when clicking on "save" button
         String subject = Objects.requireNonNull(mBinding.addMeetingActivitySubjectEditText.getText(), "Subject editText must not be null").toString();
         List<String> participants = new ArrayList<>(Arrays.asList(Objects.requireNonNull(mBinding.addMeetingActivityParticipantsEditText.getText(), "Participants editText must not be null").toString().trim().split("\\s*,\\s*")));
-        // check whether participants emails are valid
         for (String participant : participants) {
-            // first check if valid email to avoid unnecessary call to API
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(participant).matches()
-                    || !participant.endsWith(getString(R.string.company_domain_name))
+                    || !participant.endsWith(getString(R.string.company_domain_name)) // first check if valid email to avoid unnecessary call to API
                     || !getUserRepository().getUsersEmail().contains(participant)) {
                 Toast toast = Toast.makeText(this, "\"" + participant + "\" " + getString(R.string.invalid_email), Toast.LENGTH_LONG);
                 toast.show();
                 return;
             }
         }
-        MeetingRoom meetingRoom = MeetingRoom.getMeetingRoomByPosition(mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
+        MeetingRoom selectedMeetingRoom = null;
+        String stringMeetingRoom = ((MySpinnerAdapter) mBinding.addMeetingActivityRoomSpinner.getAdapter()).getList().get(mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition());
+        for (MeetingRoom meetingRoom : MeetingRoom.values()) {
+            if (stringMeetingRoom.equals(getString(meetingRoom.getStringResource()))) {
+                selectedMeetingRoom = meetingRoom;
+                break;
+            }
+        }
         MeetingPriority meetingPriority = MeetingPriority.getMeetingPriorityByPosition(mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
         String notes = Objects.requireNonNull(mBinding.addMeetingActivityNotesEditText.getText(), "Notes editText must not be null").toString();
-        Meeting newMeeting = new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes);
-        String newMeetingJson = new Gson().toJson(newMeeting);
+        Meeting newMeeting = new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, selectedMeetingRoom, meetingPriority, notes);
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(NEW_MEETING_EXTRA, newMeetingJson);
+        resultIntent.putExtra(NEW_MEETING_EXTRA, new Gson().toJson(newMeeting));
         setResult(RESULT_OK, resultIntent);
         finish();
     }
