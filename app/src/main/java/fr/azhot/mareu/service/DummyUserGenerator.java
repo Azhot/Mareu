@@ -9,9 +9,16 @@ import fr.azhot.mareu.models.User;
 public class DummyUserGenerator {
 
     private final static List<User> DUMMY_USERS = Arrays.asList(
-            new User("test@lamazone.com"),
-            new User("test2@lamazone.com"),
-            new User("test3@lamazone.com")
+            new User("maxime@lamzone.com"),
+            new User("paul@lamzone.com"),
+            new User("amandine@lamzone.com"),
+            new User("camille@lamzone.com"),
+            new User("jean@lamzone.com"),
+            new User("pierre@lamzone.com"),
+            new User("amelie@lamzone.com"),
+            new User("luc@lamzone.com"),
+            new User("viviane@lamzone.com"),
+            new User("alex@lamzone.com")
     );
 
 

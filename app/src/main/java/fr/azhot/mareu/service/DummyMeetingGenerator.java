@@ -12,26 +12,16 @@ import fr.azhot.mareu.models.MeetingRoom;
 public class DummyMeetingGenerator {
 
     private final static List<Meeting> DUMMY_MEETINGS = Arrays.asList(
-            new Meeting(createCalendar(2020, Calendar.JUNE, 1, 4, 0), "Réunion A", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.MARIO, MeetingPriority.LOW),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 2, 6, 0), "Réunion B", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.LUIGI, MeetingPriority.AVERAGE),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 3, 8, 0), "Réunion C", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.PEACH, MeetingPriority.HIGH),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 4, 10, 0), "Réunion D", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.TOAD, MeetingPriority.LOW),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 5, 12, 0), "Réunion E", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.YOSHI, MeetingPriority.AVERAGE),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 6, 14, 0), "Réunion F", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.DAISY, MeetingPriority.HIGH),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 7, 16, 0), "Réunion G", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.BOWSER, MeetingPriority.LOW),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 8, 18, 0), "Réunion H", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.HARMONIE, MeetingPriority.AVERAGE),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 9, 20, 0), "Réunion I", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.WALUIGI, MeetingPriority.HIGH),
-            new Meeting(createCalendar(2020, Calendar.JUNE, 10, 22, 0), "Réunion J", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.WARIO, MeetingPriority.LOW),
-            new Meeting(createCalendar(2020, Calendar.JULY, 1, 5, 0), "Réunion K", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.MARIO, MeetingPriority.AVERAGE),
-            new Meeting(createCalendar(2020, Calendar.JULY, 2, 7, 0), "Réunion L", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.LUIGI, MeetingPriority.HIGH),
-            new Meeting(createCalendar(2020, Calendar.JULY, 3, 9, 0), "Réunion M", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.PEACH, MeetingPriority.LOW),
-            new Meeting(createCalendar(2020, Calendar.JULY, 4, 11, 0), "Réunion N", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.TOAD, MeetingPriority.AVERAGE),
-            new Meeting(createCalendar(2020, Calendar.JULY, 5, 13, 0), "Réunion O", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.YOSHI, MeetingPriority.HIGH),
-            new Meeting(createCalendar(2020, Calendar.JULY, 6, 15, 0), "Réunion P", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.DAISY, MeetingPriority.LOW),
-            new Meeting(createCalendar(2020, Calendar.JULY, 7, 17, 0), "Réunion Q", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.BOWSER, MeetingPriority.AVERAGE),
-            new Meeting(createCalendar(2020, Calendar.JULY, 8, 19, 0), "Réunion R", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.HARMONIE, MeetingPriority.HIGH),
-            new Meeting(createCalendar(2020, Calendar.JULY, 9, 21, 0), "Réunion S", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.WALUIGI, MeetingPriority.LOW),
-            new Meeting(createCalendar(2020, Calendar.JULY, 10, 23, 0), "Réunion T", Arrays.asList("test@lamazone.com", "test2@lamazone.com", "test3@lamazone.com"), MeetingRoom.WARIO, MeetingPriority.AVERAGE)
+            new Meeting(createCalendar(2020, Calendar.JUNE, 1, 8, 0), "Réunion A", Arrays.asList("maxime@lamzone.com", "alex@lamzone.com", "viviane@lamzone.com"), MeetingRoom.MARIO, MeetingPriority.LOW),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 2, 9, 0), "Réunion B", Arrays.asList("paul@lamzone.com", "viviane@lamzone.com", "amandine@lamzone.com"), MeetingRoom.LUIGI, MeetingPriority.AVERAGE),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 3, 10, 0), "Réunion C", Arrays.asList("amandine@lamzone.com", "luc@lamzone.com", "jean@lamzone.com"), MeetingRoom.PEACH, MeetingPriority.HIGH),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 4, 11, 0), "Réunion D", Arrays.asList("camille@lamzone.com", "amelie@lamzone.com", "pierre@lamzone.com"), MeetingRoom.TOAD, MeetingPriority.LOW),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 5, 12, 0), "Réunion E", Arrays.asList("jean@lamzone.com", "pierre@lamzone.com", "luc@lamzone.com"), MeetingRoom.YOSHI, MeetingPriority.AVERAGE),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 6, 13, 0), "Réunion F", Arrays.asList("pierre@lamzone.com", "jean@lamzone.com", "camille@lamzone.com"), MeetingRoom.DAISY, MeetingPriority.HIGH),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 7, 14, 0), "Réunion G", Arrays.asList("amelie@lamzone.com", "camille@lamzone.com", "amandine@lamzone.com"), MeetingRoom.BOWSER, MeetingPriority.LOW),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 8, 15, 0), "Réunion H", Arrays.asList("luc@lamzone.com", "amandine@lamzone.com", "paul@lamzone.com"), MeetingRoom.HARMONIE, MeetingPriority.AVERAGE),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 9, 16, 0), "Réunion I", Arrays.asList("viviane@lamzone.com", "paul@lamzone.com", "maxime@lamzone.com"), MeetingRoom.WALUIGI, MeetingPriority.HIGH),
+            new Meeting(createCalendar(2020, Calendar.JUNE, 10, 17, 0), "Réunion J", Arrays.asList("alex@lamzone.com", "maxime@lamzone.com", "pierre@lamzone.com"), MeetingRoom.WARIO, MeetingPriority.LOW)
     );
 
     /**

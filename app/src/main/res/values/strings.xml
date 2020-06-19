@@ -1,7 +1,7 @@
 <resources>
     <!-- General -->
     <string name="app_name">Ma réu</string>
-    <string name="company_domain_name">\@lamazone.com</string>
+    <string name="company_domain_name">\@lamzone.com</string>
 
     <!-- Meeting cell layout -->
     <string name="delete_button">Delete button</string>
