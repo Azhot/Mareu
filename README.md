@@ -16,6 +16,11 @@ The project uses [AOSP Java Code Style](https://source.android.com/setup/contrib
 - Add a new meeting
 - Delete an existing meeting
 
+## Localization
+This apps supports:
+- English
+- French
+
 ## Screenshots
 <p>
 <img src="/screenshots/Launcher.jpg" width="32%">
