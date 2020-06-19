@@ -286,8 +286,9 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         MeetingPriority meetingPriority = MeetingPriority.getMeetingPriorityByPosition(mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
         String notes = Objects.requireNonNull(mBinding.addMeetingActivityNotesEditText.getText(), "Notes editText must not be null").toString();
         Meeting newMeeting = new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, selectedMeetingRoom, meetingPriority, notes);
+        String newMeetingJson = new Gson().toJson(newMeeting);
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(NEW_MEETING_EXTRA, new Gson().toJson(newMeeting));
+        resultIntent.putExtra(NEW_MEETING_EXTRA, newMeetingJson);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
