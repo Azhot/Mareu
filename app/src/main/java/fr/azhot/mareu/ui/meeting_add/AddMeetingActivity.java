@@ -15,8 +15,6 @@ import android.widget.Toast;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.DialogFragment;
 
-import com.google.gson.Gson;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -44,7 +42,6 @@ import static fr.azhot.mareu.utils.TimeUtils.setTimeOfDay;
 
 public class AddMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    public static final String NEW_MEETING_EXTRA = "new_meeting";
     private ActivityAddMeetingBinding mBinding;
     private Calendar mStartTimeCalendar;
     private Calendar mEndTimeCalendar;
@@ -285,10 +282,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
         MeetingPriority meetingPriority = MeetingPriority.getMeetingPriorityByPosition(mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
         String notes = Objects.requireNonNull(mBinding.addMeetingActivityNotesEditText.getText(), "Notes editText must not be null").toString();
-        Meeting newMeeting = new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, selectedMeetingRoom, meetingPriority, notes);
-        String newMeetingJson = new Gson().toJson(newMeeting);
+        getMeetingRepository().createMeeting(new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, selectedMeetingRoom, meetingPriority, notes));
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(NEW_MEETING_EXTRA, newMeetingJson);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
