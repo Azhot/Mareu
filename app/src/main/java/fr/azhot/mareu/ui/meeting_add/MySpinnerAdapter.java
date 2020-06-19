@@ -43,7 +43,7 @@ public class MySpinnerAdapter extends ArrayAdapter<String> {
         View view = super.getDropDownView(position, convertView, parent);
         TextView textView = (TextView) view;
         if (position == 0) { // set hint looks on dropdown menu
-            textView.setTextAppearance(textView.getContext(), R.style.hintItemStyle);
+            textView.setTextAppearance(textView.getContext(), R.style.spinnerHintItemStyle);
         } else {
             textView.setTextAppearance(textView.getContext(), R.style.spinnerDropDownItemStyle);
         }

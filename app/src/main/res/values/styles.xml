@@ -25,8 +25,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <!-- Hint item style -->
-    <style name="hintItemStyle">
+    <!-- Spinner hint item style -->
+    <style name="spinnerHintItemStyle">
         <item name="android:textColor">@color/colorTextHint</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">@dimen/standard_text_size</item>
