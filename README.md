@@ -17,7 +17,7 @@ The project uses [AOSP Java Code Style](https://source.android.com/setup/contrib
 - Delete an existing meeting
 
 ## Localization
-This apps supports:
+This app supports:
 - English
 - French
 
