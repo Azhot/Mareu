@@ -15,17 +15,17 @@ public class TimeUtils {
         return startTimeCalendar;
     }
 
+    public static Calendar initEndCalendar(Calendar startTimeCalendar) {
+        Calendar endTimeCalendar = (Calendar) startTimeCalendar.clone();
+        endTimeCalendar.add(Calendar.MINUTE, 45);
+        return endTimeCalendar;
+    }
+
     public static void setTimeOfDay(Calendar calendar, int hourOfDay, int minute) {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-    }
-
-    public static Calendar initEndCalendar(Calendar startTimeCalendar) {
-        Calendar endTimeCalendar = (Calendar) startTimeCalendar.clone();
-        endTimeCalendar.add(Calendar.MINUTE, 45);
-        return endTimeCalendar;
     }
 
     public static String getDateToString(final Calendar calendar) {

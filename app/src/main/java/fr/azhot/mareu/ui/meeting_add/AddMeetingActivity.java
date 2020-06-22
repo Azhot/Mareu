@@ -12,7 +12,9 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,8 +52,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mStartTimeCalendar = initStartCalendar();
-        mEndTimeCalendar = initEndCalendar(mStartTimeCalendar);
+        initData();
         initUIComponents();
     }
 
@@ -95,8 +96,9 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         refreshAvailableMeetingRooms();
     }
 
+    // override onBackPressed to set-up an AlertDialog if user tries to back without saving
     @Override
-    public void onBackPressed() { // override onBackPressed to set-up an AlertDialog if user tries to back without saving
+    public void onBackPressed() {
         if (mBinding.addMeetingActivitySubjectEditText.length() + mBinding.addMeetingActivityParticipantsEditText.length() + mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() + mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0) {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.discard_meeting)
@@ -113,22 +115,30 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
     }
 
+    private void initData() {
+        mStartTimeCalendar = initStartCalendar();
+        mEndTimeCalendar = initEndCalendar(mStartTimeCalendar);
+    }
+
     private void initUIComponents() {
         mBinding = ActivityAddMeetingBinding.inflate(getLayoutInflater());
-        View view = mBinding.getRoot();
-        setContentView(view);
+        setContentView(mBinding.getRoot());
         setUpScrollView();
-        setUpButtons();
+        setUpSaveAndBackButtons();
         refreshAddButton();
-        setUpEditTexts();
-        setUpDatePickers();
-        setUpTimePickers();
+        setUpEditText(mBinding.addMeetingActivitySubjectEditText);
+        setUpEditText(mBinding.addMeetingActivityParticipantsEditText);
+        setUpDatePicker(mBinding.addMeetingActivityStartDatePickerTextView, mStartTimeCalendar);
+        setUpDatePicker(mBinding.addMeetingActivityEndDatePickerTextView, mEndTimeCalendar);
+        setUpTimePicker(mBinding.addMeetingActivityStartTimePickerTextView, mStartTimeCalendar);
+        setUpTimePicker(mBinding.addMeetingActivityEndTimePickerTextView, mEndTimeCalendar);
         setUpSpinner(getString(R.string.hint_meeting_rooms), MeetingRoom.getMeetingRoomsStringResources(), mBinding.addMeetingActivityRoomSpinner); // set-up meeting rooms spinner
         refreshAvailableMeetingRooms();
         setUpSpinner(getString(R.string.hint_meeting_priorities), MeetingPriority.getMeetingPrioritiesStringResources(), mBinding.addMeetingActivityPrioritySpinner); // set-up meeting priority spinner
     }
 
-    private void setUpScrollView() { // sets-up the scrollView to show top border when scrolled-down
+    // sets-up the scrollView to show top border when scrolled-down
+    private void setUpScrollView() {
         mBinding.addMeetingActivityScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
@@ -141,7 +151,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         });
     }
 
-    private void setUpButtons() { // sets-up the "save" and "back" buttons
+    // used to set-up the save and back buttons
+    private void setUpSaveAndBackButtons() {
         mBinding.addMeetingActivityBackButton.setOnClickListener(new View.OnClickListener() { // back button
             @Override
             public void onClick(View v) {
@@ -156,54 +167,39 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         });
     }
 
-    private void setUpEditTexts() { // sets-up the "subject" and "participants" editTexts
-        mBinding.addMeetingActivitySubjectEditText.addTextChangedListener(new MyTextWatcher());
-        mBinding.addMeetingActivityParticipantsEditText.addTextChangedListener(new MyTextWatcher());
+    // used to set-up subject and participants editTexts
+    private void setUpEditText(AppCompatEditText editText) {
+        editText.addTextChangedListener(new MyTextWatcher());
     }
 
-    private void setUpDatePickers() { // sets-up the start date and end date DatePickers
-        mBinding.addMeetingActivityStartDatePickerTextView.setText(getDateToString(mStartTimeCalendar)); // meeting start date DatePicker
-        mBinding.addMeetingActivityStartDatePickerTextView.setOnClickListener(new View.OnClickListener() {
+    // used to set-up the start and end datePickers
+    private void setUpDatePicker(AppCompatTextView textView, final Calendar calendar) {
+        textView.setText(getDateToString(calendar));
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mClickedView = v;
-                DialogFragment datePicker = new DatePickerFragment(mStartTimeCalendar);
-                datePicker.show(getSupportFragmentManager(), "start_date_picker");
-            }
-        });
-        mBinding.addMeetingActivityEndDatePickerTextView.setText(getDateToString(mEndTimeCalendar)); // meeting end date DatePicker
-        mBinding.addMeetingActivityEndDatePickerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mClickedView = v;
-                DialogFragment datePicker = new DatePickerFragment(mEndTimeCalendar);
-                datePicker.show(getSupportFragmentManager(), "end_date_picker");
+                DialogFragment datePicker = new DatePickerFragment(calendar);
+                datePicker.show(getSupportFragmentManager(), datePicker.getTag());
             }
         });
     }
 
-    private void setUpTimePickers() { // sets-up the start time and end time TimePickers
-        mBinding.addMeetingActivityStartTimePickerTextView.setText(getTimeToString(mStartTimeCalendar)); // meeting start time TimePicker
-        mBinding.addMeetingActivityStartTimePickerTextView.setOnClickListener(new View.OnClickListener() {
+    // used to set-up the start and end timePickers
+    private void setUpTimePicker(AppCompatTextView textView, final Calendar calendar) {
+        textView.setText(getTimeToString(calendar));
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mClickedView = v;
-                DialogFragment timePicker = new TimePickerFragment(mStartTimeCalendar);
-                timePicker.show(getSupportFragmentManager(), "start_time_picker");
-            }
-        });
-        mBinding.addMeetingActivityEndTimePickerTextView.setText(getTimeToString(mEndTimeCalendar)); // meeting end time TimePicker
-        mBinding.addMeetingActivityEndTimePickerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mClickedView = v;
-                DialogFragment timePicker = new TimePickerFragment(mEndTimeCalendar);
-                timePicker.show(getSupportFragmentManager(), "end_time_picker");
+                DialogFragment timePicker = new TimePickerFragment(calendar);
+                timePicker.show(getSupportFragmentManager(), timePicker.getTag());
             }
         });
     }
 
-    private void setUpSpinner(String hint, List<Integer> stringResources, AppCompatSpinner spinner) { // used to set-up the MeetingRoom and MeetingPriority spinners
+    // used to set-up the MeetingRoom and MeetingPriority spinners
+    private void setUpSpinner(String hint, List<Integer> stringResources, AppCompatSpinner spinner) {
         List<String> spinnerList = new ArrayList<>();
         spinnerList.add(hint); // add hint
         for (int stringResource : stringResources) {
@@ -214,7 +210,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
     }
 
-    private void refreshAvailableMeetingRooms() { // refreshes list of available meeting rooms at a set time slot
+    // refreshes the list of available meeting rooms at a set time slot
+    private void refreshAvailableMeetingRooms() {
         List<String> spinnerList = new ArrayList<>();
         spinnerList.add(getString(R.string.hint_meeting_rooms)); // add hint
         for (int stringResource : MeetingRoom.getMeetingRoomsStringResources()) {
@@ -222,7 +219,9 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
         for (Meeting meeting : getMeetingRepository().getMeetings()) {
             for (MeetingRoom meetingRoom : MeetingRoom.values()) {
-                if (meetingRoom == meeting.getMeetingRoom() && mStartTimeCalendar.getTimeInMillis() < meeting.getEndTime().getTimeInMillis() && mEndTimeCalendar.getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {
+                if (meetingRoom == meeting.getMeetingRoom()
+                        && mStartTimeCalendar.getTimeInMillis() < meeting.getEndTime().getTimeInMillis()
+                        && mEndTimeCalendar.getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {
                     spinnerList.remove(getString(meetingRoom.getStringResource()));
                 }
             }
@@ -235,7 +234,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         mBinding.addMeetingActivityRoomSpinner.setSelection(0);
     }
 
-    private void refreshEndTimeDisplay() { // refreshes end time (+45 minutes) if startTime + 2700000 milliseconds (45 min) > endTime
+    // refreshes end time (+45 minutes) if endTime < startTime + 2700000 milliseconds (45 min)
+    private void refreshEndTimeDisplay() {
         if ((mStartTimeCalendar.getTimeInMillis() + 2700000) > mEndTimeCalendar.getTimeInMillis()) {
             mEndTimeCalendar = (Calendar) mStartTimeCalendar.clone();
             mEndTimeCalendar.add(Calendar.MINUTE, 45);
@@ -244,7 +244,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
     }
 
-    private void refreshStartTimeDisplay() { // refreshes start time (-45 minutes) if startTime > endTime
+    // refreshes the start time (-45 minutes) if startTime < endTime
+    private void refreshStartTimeDisplay() {
         if (mStartTimeCalendar.getTimeInMillis() > mEndTimeCalendar.getTimeInMillis()) {
             mStartTimeCalendar = (Calendar) mEndTimeCalendar.clone();
             mStartTimeCalendar.add(Calendar.MINUTE, -45);
@@ -253,14 +254,16 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
     }
 
-    public void refreshAddButton() { // refreshes the add meeting button state (disabled or enabled)
+    // refreshes the add meeting button state (disabled or enabled) depending on whether user input all necessary fields
+    public void refreshAddButton() {
         mBinding.addMeetingActivityAddButton.setEnabled(mBinding.addMeetingActivitySubjectEditText.length() != 0
                 && mBinding.addMeetingActivityParticipantsEditText.length() != 0
                 && mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() != 0
                 && mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0);
     }
 
-    private void onSubmit() { // fired when clicking on "save" button
+    // fired when clicking on "save" button -> creates the meeting and leads back to the list meeting activity
+    private void onSubmit() {
         String subject = Objects.requireNonNull(mBinding.addMeetingActivitySubjectEditText.getText(), "Subject editText must not be null").toString();
         List<String> participants = new ArrayList<>(Arrays.asList(Objects.requireNonNull(mBinding.addMeetingActivityParticipantsEditText.getText(), "Participants editText must not be null").toString().trim().split("\\s*,\\s*")));
         for (String participant : participants) {

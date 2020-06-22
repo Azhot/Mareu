@@ -16,10 +16,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import fr.azhot.mareu.R;
 import fr.azhot.mareu.base.BaseActivity;
@@ -29,6 +27,8 @@ import fr.azhot.mareu.models.MeetingRoom;
 import fr.azhot.mareu.repository.MeetingRepository;
 import fr.azhot.mareu.ui.meeting_add.AddMeetingActivity;
 import fr.azhot.mareu.ui.meeting_add.DatePickerFragment;
+
+import static fr.azhot.mareu.utils.TimeUtils.getDateToString;
 
 public class ListMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -45,6 +45,13 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
         super.onCreate(savedInstanceState);
         initData();
         initUI();
+
+        // TODO : questions to Virgile :
+        // - what about reset data when rotating screen ?
+        // - implemented a User Repository, is this OK ?
+        // - should I use AsyncTasks to load meeting/user data ?
+        // - OK with my utils classes ? Should my spinner adapter be in utils package ?
+        // - could (should ?) I do my tests on user input in the Meeting repo method createMeeting() ?
     }
 
     @Override
@@ -83,8 +90,7 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         mCalendar.set(year, month, dayOfMonth);
         setAdapterMeetingList(mMeetingRepository.getMeetingsFilteredByDate(mCalendar));
-        SimpleDateFormat date = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
-        setActionBarSubtitle(getString(R.string.filter) + ": " + date.format(mCalendar.getTime()));
+        setActionBarSubtitle(getString(R.string.filter) + ": " + getDateToString(mCalendar));
     }
 
     @Override
@@ -106,8 +112,7 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
     private void initUI() {
         // bind widgets with view binding
         mBinding = ActivityListMeetingBinding.inflate(getLayoutInflater());
-        View view = mBinding.getRoot();
-        setContentView(view);
+        setContentView(mBinding.getRoot());
         // set-up the RecyclerView
         mBinding.listMeetingActivityRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mMeetingRecyclerViewAdapter = new MeetingRecyclerViewAdapter(this, mMeetings, mMeetingRepository);

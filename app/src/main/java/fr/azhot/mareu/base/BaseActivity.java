@@ -7,7 +7,7 @@ import fr.azhot.mareu.MaReuApplication;
 import fr.azhot.mareu.repository.MeetingRepository;
 import fr.azhot.mareu.repository.UserRepository;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     public MeetingRepository getMeetingRepository() {
         return ((MaReuApplication) getApplication()).getMeetingRepository();
