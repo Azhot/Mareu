@@ -155,35 +155,31 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/time_pickers_text_size"
-                app:layout_constraintEnd_toStartOf="@id/add_meeting_end_arrow"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/add_meeting_activity_start_datePicker_textView"
                 app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_start_datePicker_textView" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/add_meeting_end_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_margin"
                 android:background="@drawable/ic_arrow_right_24"
                 app:layout_constraintBottom_toBottomOf="@id/add_meeting_activity_end_datePicker_textView"
-                app:layout_constraintEnd_toStartOf="@id/add_meeting_activity_end_timePicker_textView"
-                app:layout_constraintStart_toEndOf="@id/add_meeting_activity_end_datePicker_textView"
+                app:layout_constraintStart_toStartOf="@id/add_meeting_start_arrow"
                 app:layout_constraintTop_toTopOf="@id/add_meeting_activity_end_datePicker_textView" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/add_meeting_activity_end_timePicker_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="@dimen/standard_text_padding"
                 android:textAllCaps="false"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/time_pickers_text_size"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/add_meeting_end_arrow"
-                app:layout_constraintTop_toTopOf="@id/add_meeting_activity_end_datePicker_textView" />
+                app:layout_constraintStart_toStartOf="@id/add_meeting_activity_start_timePicker_textView"
+                app:layout_constraintTop_toBottomOf="@id/add_meeting_activity_start_timePicker_textView" />
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/add_meeting_activity_room_spinner"
