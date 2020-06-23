@@ -45,8 +45,7 @@ import static fr.azhot.mareu.utils.TimeUtils.setTimeOfDay;
 public class AddMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private ActivityAddMeetingBinding mBinding;
-    private Calendar mStartTimeCalendar;
-    private Calendar mEndTimeCalendar;
+    private Calendar mStartTimeCalendar, mEndTimeCalendar;
     private View mClickedView;
 
     @Override
@@ -99,7 +98,10 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     // override onBackPressed to set-up an AlertDialog if user tries to back without saving
     @Override
     public void onBackPressed() {
-        if (mBinding.addMeetingActivitySubjectEditText.length() + mBinding.addMeetingActivityParticipantsEditText.length() + mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() + mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0) {
+        if (mBinding.addMeetingActivitySubjectEditText.length()
+                + mBinding.addMeetingActivityParticipantsEditText.length()
+                + mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition()
+                + mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0) {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.discard_meeting)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -129,8 +131,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         setUpEditText(mBinding.addMeetingActivitySubjectEditText);
         setUpEditText(mBinding.addMeetingActivityParticipantsEditText);
         setUpDatePicker(mBinding.addMeetingActivityStartDatePickerTextView, mStartTimeCalendar);
-        setUpDatePicker(mBinding.addMeetingActivityEndDatePickerTextView, mEndTimeCalendar);
         setUpTimePicker(mBinding.addMeetingActivityStartTimePickerTextView, mStartTimeCalendar);
+        setUpDatePicker(mBinding.addMeetingActivityEndDatePickerTextView, mEndTimeCalendar);
         setUpTimePicker(mBinding.addMeetingActivityEndTimePickerTextView, mEndTimeCalendar);
         setUpSpinner(getString(R.string.hint_meeting_rooms), MeetingRoom.getMeetingRoomsStringResources(), mBinding.addMeetingActivityRoomSpinner); // set-up meeting rooms spinner
         refreshAvailableMeetingRooms();
@@ -275,17 +277,17 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
                 return;
             }
         }
-        MeetingRoom selectedMeetingRoom = null;
+        MeetingRoom meetingRoom = null;
         String stringMeetingRoom = ((MySpinnerAdapter) mBinding.addMeetingActivityRoomSpinner.getAdapter()).getList().get(mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition());
-        for (MeetingRoom meetingRoom : MeetingRoom.values()) {
-            if (stringMeetingRoom.equals(getString(meetingRoom.getStringResource()))) {
-                selectedMeetingRoom = meetingRoom;
+        for (MeetingRoom m : MeetingRoom.values()) {
+            if (stringMeetingRoom.equals(getString(m.getStringResource()))) {
+                meetingRoom = m;
                 break;
             }
         }
         MeetingPriority meetingPriority = MeetingPriority.getMeetingPriorityByPosition(mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
         String notes = Objects.requireNonNull(mBinding.addMeetingActivityNotesEditText.getText(), "Notes editText must not be null").toString();
-        getMeetingRepository().createMeeting(new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, selectedMeetingRoom, meetingPriority, notes));
+        getMeetingRepository().createMeeting(new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes));
         Intent resultIntent = new Intent();
         setResult(RESULT_OK, resultIntent);
         finish();
