@@ -37,6 +37,7 @@ This app supports:
 ## Tech/framework used
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/)
 - [EventBus](https://github.com/greenrobot/EventBus)
+- [Gson](https://github.com/google/gson)
 - [Espresso](https://developer.android.com/training/testing/espresso)
 - [JUnit](https://junit.org/junit5/)
 
