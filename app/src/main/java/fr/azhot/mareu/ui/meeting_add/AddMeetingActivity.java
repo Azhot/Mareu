@@ -16,6 +16,8 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.gson.Gson;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -43,6 +45,7 @@ import static fr.azhot.mareu.utils.TimeUtils.setTimeOfDay;
 
 public class AddMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    public static final String NEW_MEETING_EXTRA = "new_meeting";
     private ActivityAddMeetingBinding mBinding;
     private Calendar mStartTimeCalendar, mEndTimeCalendar;
     private View mClickedView;
@@ -226,9 +229,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
         for (Meeting meeting : getMeetingRepository().getMeetings()) {
             for (MeetingRoom meetingRoom : MeetingRoom.values()) {
-                if (meetingRoom == meeting.getMeetingRoom()
-                        && mStartTimeCalendar.getTimeInMillis() < meeting.getEndTime().getTimeInMillis()
-                        && mEndTimeCalendar.getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {
+                if (meetingRoom == meeting.getMeetingRoom() && mStartTimeCalendar.getTimeInMillis() < meeting.getEndTime().getTimeInMillis() && mEndTimeCalendar.getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {
                     spinnerList.remove(getString(meetingRoom.getStringResource()));
                 }
             }
@@ -285,8 +286,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         }
         MeetingPriority meetingPriority = MeetingPriority.getMeetingPriorityByPosition(mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
         String notes = Objects.requireNonNull(mBinding.addMeetingActivityNotesEditText.getText(), "Notes editText must not be null").toString();
-        getMeetingRepository().createMeeting(new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes));
-        Intent resultIntent = new Intent();
+        String newMeetingJson = new Gson().toJson(new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes));
+        Intent resultIntent = new Intent().putExtra(NEW_MEETING_EXTRA, newMeetingJson);
         setResult(RESULT_OK, resultIntent);
         finish();
     }

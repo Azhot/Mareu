@@ -16,6 +16,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.gson.Gson;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -90,9 +92,17 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // retrieve new meeting via Gson
         // update meeting list if meeting was created
         if (requestCode == LAUNCH_ADD_MEETING_ACTIVITY && resultCode == Activity.RESULT_OK && data != null) {
+            String newMeetingGson = data.getStringExtra(AddMeetingActivity.NEW_MEETING_EXTRA);
+            Meeting newMeeting = new Gson().fromJson(newMeetingGson, Meeting.class);
+            mMeetingRepository.createMeeting(newMeeting);
+            if (mMeetings != mMeetingRepository.getMeetings()) {
+                mMeetings.add(newMeeting); // to cope with updating list if a filter is on
+            }
             mMeetingRecyclerViewAdapter.setMeetingList(mMeetings);
+
         }
     }
 
