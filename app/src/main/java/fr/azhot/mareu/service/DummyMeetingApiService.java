@@ -41,9 +41,12 @@ public class DummyMeetingApiService implements MeetingApiService {
     public List<Meeting> getMeetingsFilteredByDate(final Calendar calendar) {
         List<Meeting> meetings = new ArrayList<>();
         for (Meeting meeting : mMeetings) {
-            if (meeting.getStartTime().get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
-                    && meeting.getStartTime().get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
-                    && meeting.getStartTime().get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)) {
+            if (meeting.getStartTime().getTimeInMillis() >= calendar.getTimeInMillis()
+                    && meeting.getStartTime().getTimeInMillis() < (calendar.getTimeInMillis() + 86400000)
+                    || meeting.getEndTime().getTimeInMillis() >= calendar.getTimeInMillis()
+                    && meeting.getEndTime().getTimeInMillis() < (calendar.getTimeInMillis() + 86400000)
+                    || meeting.getStartTime().getTimeInMillis() <= calendar.getTimeInMillis()
+                    && meeting.getEndTime().getTimeInMillis() >= (calendar.getTimeInMillis() + 86400000)) {
                 meetings.add(meeting);
             }
         }

@@ -45,13 +45,6 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
         super.onCreate(savedInstanceState);
         initData();
         initUI();
-
-        // TODO : questions to Virgile :
-        // - what about reset data when rotating screen ?
-        // - implemented a User Repository, is this OK ?
-        // - should I use AsyncTasks to load meeting/user data ?
-        // - OK with my utils classes ? Should my spinner adapter be in utils package ?
-        // - could (should ?) I do my tests on user input in the Meeting repo method createMeeting() ?
     }
 
     @Override
@@ -88,7 +81,8 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        mCalendar.set(year, month, dayOfMonth);
+        mCalendar.set(year, month, dayOfMonth, 0, 0, 0);
+        mCalendar.set(Calendar.MILLISECOND, 0);
         setAdapterMeetingList(mMeetingRepository.getMeetingsFilteredByDate(mCalendar));
         setActionBarSubtitle(getString(R.string.filter) + ": " + getDateToString(mCalendar));
     }
