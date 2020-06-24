@@ -25,7 +25,7 @@
     <string name="hint_meeting_rooms">Choisissez une salle de réunion …</string>
     <string name="hint_meeting_priorities">Choisissez l\'importance de la réunion …</string>
     <string name="save">Enregistrer</string>
-    <string name="no_room_available">Aucune salle disponible pour ce créaneau horaire …</string>
+    <string name="no_room_available">Aucune salle disponible pour ce créneau horaire …</string>
     <string name="invalid_email">n\'est pas un e-mail valide</string>
 
     <!-- MeetingRoom enum values -->
