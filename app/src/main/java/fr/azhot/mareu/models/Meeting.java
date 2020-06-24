@@ -13,7 +13,7 @@ public class Meeting {
     private Calendar mEndTime;
     private MeetingRoom mMeetingRoom;
     private String mSubject;
-    private List<String> mParticipants;
+    private List<User> mParticipants;
     private MeetingPriority mMeetingPriority;
     private String mNotes;
 
@@ -26,7 +26,7 @@ public class Meeting {
      * @param meetingRoom     a {@link MeetingRoom} member representing the meeting room name
      * @param meetingPriority a {@link MeetingPriority} member representing the meeting priority
      */
-    public Meeting(Calendar startTime, String subject, List<String> participants, MeetingRoom meetingRoom, MeetingPriority meetingPriority) {
+    public Meeting(Calendar startTime, String subject, List<User> participants, MeetingRoom meetingRoom, MeetingPriority meetingPriority) {
         this.mId = UUID.randomUUID().toString();
         this.mStartTime = startTime;
         this.mEndTime = (Calendar) startTime.clone();
@@ -48,7 +48,7 @@ public class Meeting {
      * @param meetingPriority a {@link MeetingPriority} member representing the meeting priority
      * @param notes           a {@link String} representing the meeting's notes
      */
-    public Meeting(Calendar startTime, Calendar endTime, String subject, List<String> participants, MeetingRoom meetingRoom, MeetingPriority meetingPriority, String notes) {
+    public Meeting(Calendar startTime, Calendar endTime, String subject, List<User> participants, MeetingRoom meetingRoom, MeetingPriority meetingPriority, String notes) {
         this.mId = UUID.randomUUID().toString();
         this.mStartTime = startTime;
         this.mEndTime = endTime;
@@ -119,16 +119,16 @@ public class Meeting {
     /**
      * @return the participants of the meeting
      */
-    public List<String> getParticipants() {
+    public List<User> getParticipants() {
         return this.mParticipants;
     }
 
     /**
      * Sets the participants of a meeting
      *
-     * @param participants a {@link List<String>} representing the meeting participants to set
+     * @param participants a {@link List<User>} representing the meeting participants to set
      */
-    public void setParticipants(final List<String> participants) {
+    public void setParticipants(final List<User> participants) {
         this.mParticipants = participants;
     }
 

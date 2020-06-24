@@ -124,7 +124,7 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
             // set-up the participants details text
             StringBuilder participants = new StringBuilder();
             for (int i = 0; i < meeting.getParticipants().size(); i++) {
-                participants.append(meeting.getParticipants().get(i));
+                participants.append(meeting.getParticipants().get(i).getEmail());
                 if (i != meeting.getParticipants().size() - 1) {
                     participants.append(", ");
                 }

@@ -34,6 +34,7 @@ import fr.azhot.mareu.events.MustRefreshAddButtonEvent;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.models.MeetingPriority;
 import fr.azhot.mareu.models.MeetingRoom;
+import fr.azhot.mareu.models.User;
 import fr.azhot.mareu.utils.MyOnItemSelectedListener;
 import fr.azhot.mareu.utils.MyTextWatcher;
 
@@ -100,7 +101,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     @Override
     // override onBackPressed to set-up an AlertDialog if user tries to back without saving
     public void onBackPressed() {
-        if (mBinding.addMeetingActivitySubjectEditText.length() != 0 && mBinding.addMeetingActivityParticipantsEditText.length() != 0 && mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() != 0 && mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0) {
+        if (mBinding.addMeetingActivitySubjectEditText.length() != 0 || mBinding.addMeetingActivityParticipantsEditText.length() != 0 || mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() != 0 || mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0) {
             new AlertDialog.Builder(this)
                     .setMessage(R.string.discard_meeting)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -213,9 +214,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     private void setUpSpinner(String hint, List<Integer> stringResources, AppCompatSpinner spinner) { // used to set-up the MeetingRoom and MeetingPriority spinners
         List<String> spinnerList = new ArrayList<>();
         spinnerList.add(hint); // add hint
-        for (int stringResource : stringResources) {
+        for (int stringResource : stringResources)
             spinnerList.add(getString(stringResource));
-        }
         MySpinnerAdapter spinnerAdapter = new MySpinnerAdapter(this, R.layout.spinner_item, spinnerList);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
@@ -224,9 +224,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     private void refreshAvailableMeetingRooms() { // refreshes the list of available meeting rooms at a set time slot
         List<String> spinnerList = new ArrayList<>();
         spinnerList.add(getString(R.string.hint_meeting_rooms)); // add hint
-        for (int stringResource : MeetingRoom.getMeetingRoomsStringResources()) {
+        for (int stringResource : MeetingRoom.getMeetingRoomsStringResources())
             spinnerList.add(getString(stringResource));
-        }
         for (Meeting meeting : getMeetingRepository().getMeetings()) {
             for (MeetingRoom meetingRoom : MeetingRoom.values()) {
                 if (meetingRoom == meeting.getMeetingRoom() && mStartTimeCalendar.getTimeInMillis() < meeting.getEndTime().getTimeInMillis() && mEndTimeCalendar.getTimeInMillis() > meeting.getStartTime().getTimeInMillis()) {
@@ -266,8 +265,9 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
 
     private void onSubmit() { // fired when clicking on "save" button -> creates the meeting and leads back to the list meeting activity
         String subject = Objects.requireNonNull(mBinding.addMeetingActivitySubjectEditText.getText(), "Subject editText must not be null").toString();
-        List<String> participants = new ArrayList<>(Arrays.asList(Objects.requireNonNull(mBinding.addMeetingActivityParticipantsEditText.getText(), "Participants editText must not be null").toString().trim().split("\\s*,\\s*")));
-        for (String participant : participants) {
+        List<String> participantsString = new ArrayList<>(Arrays.asList(Objects.requireNonNull(mBinding.addMeetingActivityParticipantsEditText.getText(), "Participants editText must not be null").toString().trim().split("\\s*,\\s*")));
+        List<User> participants = new ArrayList<>();
+        for (String participant : participantsString) {
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(participant).matches()
                     || !participant.endsWith(getString(R.string.company_domain_name)) // first check if valid email to avoid unnecessary call to API
                     || !getUserRepository().getUsersEmail().contains(participant)) {
@@ -275,6 +275,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
                 toast.show();
                 return;
             }
+            participants.add(new User(participant));
         }
         MeetingRoom meetingRoom = null;
         String stringMeetingRoom = ((MySpinnerAdapter) mBinding.addMeetingActivityRoomSpinner.getAdapter()).getList().get(mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition());
@@ -287,8 +288,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         MeetingPriority meetingPriority = MeetingPriority.getMeetingPriorityByPosition(mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() - 1); // withdraw 1 corresponding to the hint
         String notes = Objects.requireNonNull(mBinding.addMeetingActivityNotesEditText.getText(), "Notes editText must not be null").toString();
         String newMeetingJson = new Gson().toJson(new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes));
-        Intent resultIntent = new Intent().putExtra(NEW_MEETING_EXTRA, newMeetingJson);
-        setResult(RESULT_OK, resultIntent);
+        setResult(RESULT_OK, new Intent().putExtra(NEW_MEETING_EXTRA, newMeetingJson));
         finish();
     }
 
