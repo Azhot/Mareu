@@ -14,6 +14,7 @@ import fr.azhot.mareu.di.DI;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.models.MeetingPriority;
 import fr.azhot.mareu.models.MeetingRoom;
+import fr.azhot.mareu.models.User;
 import fr.azhot.mareu.repository.MeetingRepository;
 import fr.azhot.mareu.service.DummyMeetingGenerator;
 
@@ -46,7 +47,7 @@ public class MeetingRepositoryTest {
     @Test
     public void createMeetingWithSuccess() {
         List<Meeting> meetings = mMeetingRepository.getMeetings();
-        Meeting meeting = new Meeting(Calendar.getInstance(), "MeetingTest", Collections.singletonList("test@test.test"), MeetingRoom.MARIO, MeetingPriority.AVERAGE);
+        Meeting meeting = new Meeting(Calendar.getInstance(), "MeetingTest", Collections.singletonList(new User("test@test.test")), MeetingRoom.MARIO, MeetingPriority.AVERAGE);
         mMeetingRepository.createMeeting(meeting);
         assertTrue(meetings.contains(meeting));
     }
@@ -54,7 +55,7 @@ public class MeetingRepositoryTest {
     @Test
     public void deleteMeetingWithSuccess() {
         List<Meeting> meetings = mMeetingRepository.getMeetings();
-        Meeting meeting = new Meeting(Calendar.getInstance(), "MeetingTest", Collections.singletonList("test@test.test"), MeetingRoom.MARIO, MeetingPriority.AVERAGE);
+        Meeting meeting = new Meeting(Calendar.getInstance(), "MeetingTest", Collections.singletonList(new User("test@test.test")), MeetingRoom.MARIO, MeetingPriority.AVERAGE);
         meetings.add(meeting);
         mMeetingRepository.deleteMeeting(meeting);
         assertFalse(meetings.contains(meeting));

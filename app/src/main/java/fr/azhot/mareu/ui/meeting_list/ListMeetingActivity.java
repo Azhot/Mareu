@@ -102,7 +102,6 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
                 mMeetings.add(newMeeting); // to cope with updating list if a filter is on
             }
             mMeetingRecyclerViewAdapter.setMeetingList(mMeetings);
-
         }
     }
 
