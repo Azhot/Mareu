@@ -65,11 +65,13 @@ public class MeetingRepositoryTest {
     public void getMeetingsFilteredByDateWithSuccess() {
         List<Meeting> meetings = mMeetingRepository.getMeetings();
         for (Meeting meeting : meetings) {
-            meeting.getStartTime().set(2020, Calendar.JUNE, 1);
+            meeting.getStartTime().set(2020, Calendar.JUNE, 1, 12, 0, 0);
+            meeting.getEndTime().set(2020, Calendar.JUNE, 1, 13, 0, 0);
         }
-        meetings.get(0).getStartTime().set(2020, Calendar.JUNE, 2);
+        meetings.get(0).getStartTime().set(2020, Calendar.JUNE, 2, 12, 0, 0);
+        meetings.get(0).getEndTime().set(2020, Calendar.JUNE, 2, 13, 0, 0);
         Calendar cal = Calendar.getInstance();
-        cal.set(2020, Calendar.JUNE, 2);
+        cal.set(2020, Calendar.JUNE, 2, 12, 0, 0);
         List<Meeting> expectedMeetings = mMeetingRepository.getMeetingsFilteredByDate(cal);
         assertEquals(1, expectedMeetings.size());
         assertTrue(expectedMeetings.get(0).getStartTime().get(Calendar.DAY_OF_YEAR) == cal.get(Calendar.DAY_OF_YEAR)
