@@ -87,5 +87,4 @@ public class MeetingRepositoryTest {
         assertEquals(1, expectedMeetings.size());
         assertEquals(expectedMeetings.get(0).getMeetingRoom(), MeetingRoom.LUIGI);
     }
-
 }
