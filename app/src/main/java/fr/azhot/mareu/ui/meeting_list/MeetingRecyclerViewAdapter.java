@@ -26,12 +26,11 @@ import static fr.azhot.mareu.utils.TimeUtils.getTimeToString;
 
 public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecyclerViewAdapter.MeetingViewHolder> {
 
-    private final Context mContext;
     private List<Meeting> mMeetings;
     private MeetingRepository mMeetingRepository;
+    private Context mContext;
 
-    public MeetingRecyclerViewAdapter(Context context, List<Meeting> meetings, MeetingRepository meetingRepository) {
-        this.mContext = context;
+    public MeetingRecyclerViewAdapter(List<Meeting> meetings, MeetingRepository meetingRepository) {
         this.mMeetings = meetings;
         this.mMeetingRepository = meetingRepository;
     }
@@ -44,7 +43,8 @@ public class MeetingRecyclerViewAdapter extends RecyclerView.Adapter<MeetingRecy
     @NonNull
     @Override
     public MeetingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MeetingViewHolder(CellMeetingBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        mContext = parent.getContext();
+        return new MeetingViewHolder(CellMeetingBinding.inflate(LayoutInflater.from(mContext), parent, false));
     }
 
     @Override

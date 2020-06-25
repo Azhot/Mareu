@@ -118,7 +118,7 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
         setContentView(mBinding.getRoot());
         // set-up the RecyclerView
         mBinding.listMeetingActivityRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mMeetingRecyclerViewAdapter = new MeetingRecyclerViewAdapter(this, mMeetings, mMeetingRepository);
+        mMeetingRecyclerViewAdapter = new MeetingRecyclerViewAdapter(mMeetings, mMeetingRepository);
         mBinding.listMeetingActivityRecyclerView.setAdapter(mMeetingRecyclerViewAdapter);
         // set-up the FAB to add new meetings
         mBinding.listMeetingActivityFab.setOnClickListener(new View.OnClickListener() {
