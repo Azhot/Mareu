@@ -4,15 +4,18 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -31,8 +34,9 @@ import fr.azhot.mareu.ui.meeting_add.AddMeetingActivity;
 import fr.azhot.mareu.ui.meeting_add.DatePickerFragment;
 
 import static fr.azhot.mareu.utils.TimeUtils.getDateToString;
+import static fr.azhot.mareu.utils.TimeUtils.getTimeToString;
 
-public class ListMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
+public class ListMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, MeetingRecyclerViewAdapter.Listener {
 
     private static final int LAUNCH_ADD_MEETING_ACTIVITY = 1;
     private ActivityListMeetingBinding mBinding;
@@ -101,7 +105,7 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
             if (mMeetings != mMeetingRepository.getMeetings()) {
                 mMeetings.add(newMeeting); // to cope with updating list if a filter is on
             }
-            mMeetingRecyclerViewAdapter.setMeetingList(mMeetings);
+            mMeetingRecyclerViewAdapter.setMeetingsList(mMeetings);
         }
     }
 
@@ -118,7 +122,7 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
         setContentView(mBinding.getRoot());
         // set-up the RecyclerView
         mBinding.listMeetingActivityRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mMeetingRecyclerViewAdapter = new MeetingRecyclerViewAdapter(mMeetings, mMeetingRepository);
+        mMeetingRecyclerViewAdapter = new MeetingRecyclerViewAdapter(mMeetings, this);
         mBinding.listMeetingActivityRecyclerView.setAdapter(mMeetingRecyclerViewAdapter);
         // set-up the FAB to add new meetings
         mBinding.listMeetingActivityFab.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +141,36 @@ public class ListMeetingActivity extends BaseActivity implements DatePickerDialo
     // used for filtering meetings
     private void setAdapterMeetingList(List<Meeting> meetings) {
         mMeetings = meetings;
-        mMeetingRecyclerViewAdapter.setMeetingList(mMeetings);
+        mMeetingRecyclerViewAdapter.setMeetingsList(mMeetings);
+    }
+
+    @Override
+    public void onClickDeleteButton(Meeting meeting) {
+        mMeetingRepository.deleteMeeting(meeting);
+        mMeetingRecyclerViewAdapter.removeMeetingFromMeetingsList(meeting); // to cope with filtered lists
+    }
+
+    @Override
+    public void onClickMeeting(Meeting meeting) {
+        // set-up toast message when user clicks on an item
+        // this is meant to be temporary and eventually replaced by a detail activity
+        StringBuilder meetingDetails = new StringBuilder();
+        meetingDetails.append(meeting.getSubject());
+        meetingDetails.append(" - ");
+        meetingDetails.append(getResources().getString(meeting.getMeetingRoom().getStringResource()));
+        meetingDetails.append("\n");
+        meetingDetails.append(getDateToString(meeting.getStartTime()));
+        meetingDetails.append(" - ");
+        meetingDetails.append(getTimeToString(meeting.getStartTime()));
+        meetingDetails.append("\n");
+        meetingDetails.append(getDateToString(meeting.getEndTime()));
+        meetingDetails.append(" - ");
+        meetingDetails.append(getTimeToString(meeting.getEndTime()));
+        Toast toast = Toast.makeText(this, meetingDetails, Toast.LENGTH_SHORT);
+        AppCompatTextView textView = toast.getView().findViewById(android.R.id.message);
+        if (textView != null) {
+            textView.setGravity(Gravity.CENTER);
+        }
+        toast.show();
     }
 }

@@ -3,13 +3,20 @@ package fr.azhot.mareu.utils;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import org.greenrobot.eventbus.EventBus;
-
-import fr.azhot.mareu.events.MustRefreshAddButtonEvent;
+import java.lang.ref.WeakReference;
 
 public class MyTextWatcher implements TextWatcher {
 
-    public MyTextWatcher() {
+    private Listener mCallback;
+
+    public MyTextWatcher(Listener callback) {
+        this.mCallback = callback;
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        WeakReference<MyTextWatcher.Listener> callbackWeakReference = new WeakReference<>(mCallback);
+        callbackWeakReference.get().onTextChanged();
     }
 
     @Override
@@ -22,8 +29,7 @@ public class MyTextWatcher implements TextWatcher {
 
     }
 
-    @Override
-    public void afterTextChanged(Editable s) {
-        EventBus.getDefault().post(new MustRefreshAddButtonEvent());
+    public interface Listener {
+        void onTextChanged();
     }
 }

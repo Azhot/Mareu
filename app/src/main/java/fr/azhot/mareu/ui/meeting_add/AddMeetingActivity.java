@@ -18,9 +18,6 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.gson.Gson;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -30,7 +27,6 @@ import java.util.Objects;
 import fr.azhot.mareu.R;
 import fr.azhot.mareu.base.BaseActivity;
 import fr.azhot.mareu.databinding.ActivityAddMeetingBinding;
-import fr.azhot.mareu.events.MustRefreshAddButtonEvent;
 import fr.azhot.mareu.models.Meeting;
 import fr.azhot.mareu.models.MeetingPriority;
 import fr.azhot.mareu.models.MeetingRoom;
@@ -44,7 +40,7 @@ import static fr.azhot.mareu.utils.TimeUtils.initEndCalendar;
 import static fr.azhot.mareu.utils.TimeUtils.initStartCalendar;
 import static fr.azhot.mareu.utils.TimeUtils.setTimeOfDay;
 
-public class AddMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class AddMeetingActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, MyTextWatcher.Listener, MyOnItemSelectedListener.Listener {
 
     public static final String NEW_MEETING_EXTRA = "new_meeting";
     private ActivityAddMeetingBinding mBinding;
@@ -59,15 +55,8 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
+    public void onTextChanged() {
+        refreshAddButton();
     }
 
     @Override
@@ -99,6 +88,11 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     }
 
     @Override
+    public void onSpinnerSetSelection() {
+        refreshAddButton();
+    }
+
+    @Override
     // override onBackPressed to set-up an AlertDialog if user tries to back without saving
     public void onBackPressed() {
         if (mBinding.addMeetingActivitySubjectEditText.length() != 0 || mBinding.addMeetingActivityParticipantsEditText.length() != 0 || mBinding.addMeetingActivityRoomSpinner.getSelectedItemPosition() != 0 || mBinding.addMeetingActivityPrioritySpinner.getSelectedItemPosition() != 0) {
@@ -127,7 +121,6 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         setContentView(mBinding.getRoot());
         setUpScrollView();
         setUpSaveAndBackButtons();
-        refreshAddButton();
         setUpEditText(mBinding.addMeetingActivitySubjectEditText);
         setUpEditText(mBinding.addMeetingActivityParticipantsEditText);
         setUpDatePickers();
@@ -166,7 +159,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
     }
 
     private void setUpEditText(AppCompatEditText editText) { // used to set-up subject and participants editTexts
-        editText.addTextChangedListener(new MyTextWatcher());
+        editText.addTextChangedListener(new MyTextWatcher(this));
     }
 
     private void setUpDatePickers() { // used to set-up the start and end datePickers
@@ -218,7 +211,7 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
             spinnerList.add(getString(stringResource));
         MySpinnerAdapter spinnerAdapter = new MySpinnerAdapter(this, R.layout.spinner_item, spinnerList);
         spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+        spinner.setOnItemSelectedListener(new MyOnItemSelectedListener(this));
     }
 
     private void refreshAvailableMeetingRooms() { // refreshes the list of available meeting rooms at a set time slot
@@ -290,10 +283,5 @@ public class AddMeetingActivity extends BaseActivity implements DatePickerDialog
         String newMeetingJson = new Gson().toJson(new Meeting(mStartTimeCalendar, mEndTimeCalendar, subject, participants, meetingRoom, meetingPriority, notes));
         setResult(RESULT_OK, new Intent().putExtra(NEW_MEETING_EXTRA, newMeetingJson));
         finish();
-    }
-
-    @Subscribe
-    public void onMustRefreshAddButtonEvent(MustRefreshAddButtonEvent event) {
-        refreshAddButton();
     }
 }

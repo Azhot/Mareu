@@ -4,12 +4,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import org.greenrobot.eventbus.EventBus;
+import java.lang.ref.WeakReference;
 
 import fr.azhot.mareu.R;
-import fr.azhot.mareu.events.MustRefreshAddButtonEvent;
 
 public class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+
+    private Listener mCallback;
+
+    public MyOnItemSelectedListener(Listener callback) {
+        this.mCallback = callback;
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         TextView textView = (TextView) view;
@@ -18,7 +24,12 @@ public class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListe
                 textView.setTextAppearance(textView.getContext(), R.style.spinnerItemStyle);
             }
         }
-        EventBus.getDefault().post(new MustRefreshAddButtonEvent());
+        WeakReference<Listener> callBackWeakReference = new WeakReference<>(mCallback);
+        callBackWeakReference.get().onSpinnerSetSelection();
+    }
+
+    public interface Listener {
+        void onSpinnerSetSelection();
     }
 
     @Override
