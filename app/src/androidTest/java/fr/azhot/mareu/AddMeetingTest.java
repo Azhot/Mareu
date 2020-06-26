@@ -29,7 +29,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
@@ -76,7 +75,7 @@ public class AddMeetingTest {
      * When trying to add a meeting that overlaps another meeting, the MeetingRoom spinner is updated
      */
     @Test
-    public void myMeetingList_displayAlertDialogIfOverlaps() {
+    public void myMeetingList_meetingRoomSpinnerIsUpdated() {
         // first create a meeting at a definite date (distant), time and room
         CreateMeetingActions.createMeeting();
 
