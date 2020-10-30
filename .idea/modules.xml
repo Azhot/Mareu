@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Maréu.iml" filepath="$PROJECT_DIR$/Maréu.iml" group="Maréu" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Maréu/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Maréu.iml" filepath="$PROJECT_DIR$/.idea/modules/Maréu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Maréu.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Maréu.app.iml" />
     </modules>
   </component>
 </project>
